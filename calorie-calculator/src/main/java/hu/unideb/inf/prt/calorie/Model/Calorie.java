@@ -9,7 +9,7 @@ public class Calorie {
 		super();
 		this.kcal = kcal;
 	}
-	public Calorie(double kcal, double carbohydrate, double protein, double fat) {
+	public Calorie(double kcal, double carbohydrate,double fat ,double protein ) {
 		super();
 		this.kcal = kcal;
 		this.carbohydrate = carbohydrate;

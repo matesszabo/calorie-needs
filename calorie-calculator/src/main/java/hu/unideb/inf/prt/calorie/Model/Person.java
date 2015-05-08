@@ -8,13 +8,13 @@ public class Person {
 	private int excercise;
 	private String gender;
 	private int goal;
-	private double weight_change;
+	//private double weight_change;
 	private double BMI;
 	private double BMR;
 	private Calorie needs;
 	
 	public Person(int id, int height, double weight, int year, int excercise,
-			String gender, int goal, double weight_change) {
+			String gender, int goal) {
 		super();
 		this.id=id;
 		this.height = height;
@@ -23,7 +23,7 @@ public class Person {
 		this.excercise = excercise;
 		this.gender = gender;
 		this.goal = goal;
-		this.weight_change = weight_change;
+		//this.weight_change = weight_change;
 	}
 
 	public Person() {
@@ -87,13 +87,13 @@ public class Person {
 		this.goal = goal;
 	}
 
-	public double getWeight_change() {
+	/*public double getWeight_change() {
 		return weight_change;
 	}
 
 	public void setWeight_change(double weight_change) {
 		this.weight_change = weight_change;
-	}
+	}*/
 
 	public double getBMI() {
 		return BMI;
@@ -123,8 +123,7 @@ public class Person {
 	public String toString() {
 		return "Person [id=" + id + ", height=" + height + ", weight=" + weight
 				+ ", year=" + year + ", excercise=" + excercise + ", gender="
-				+ gender + ", goal=" + goal + ", weight_change="
-				+ weight_change + ", BMI=" + BMI + ", BMR=" + BMR + ", needs="
+				+ gender + ", goal=" + goal + ", BMI=" + BMI + ", BMR=" + BMR + ", needs="
 				+ needs + "]";
 	}
 	

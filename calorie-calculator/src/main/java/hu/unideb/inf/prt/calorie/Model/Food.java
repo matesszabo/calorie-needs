@@ -3,14 +3,16 @@ package hu.unideb.inf.prt.calorie.Model;
 public class Food {
 
 	private int id;
+	private int userId;
 	private String name;
 	private Calorie calorie;
 	private double quantity;
 	private String unit;
-	public Food(int id, String name, Calorie calorie, double quantity,
+	public Food(int id,int userId, String name, Calorie calorie, double quantity,
 			String unit) {
 		super();
 		this.id = id;
+		this.userId=userId;
 		this.name = name;
 		this.calorie = calorie;
 		this.quantity = quantity;
@@ -18,6 +20,12 @@ public class Food {
 	}
 	public Food() {
 		super();
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public int getId() {
 		return id;
