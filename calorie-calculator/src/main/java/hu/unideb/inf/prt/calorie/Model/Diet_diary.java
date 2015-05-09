@@ -7,12 +7,12 @@ public class Diet_diary {
 	private int userId;
 	private int foodId;
 	private DateTime date;
-	private int quantity;
+	private double quantity;
 	private String unit;
 	private String meal;
 	private Calorie needs;
 	private Calorie remaining;
-	public Diet_diary(int userId, int foodId, DateTime date, int quantity,
+	public Diet_diary(int userId, int foodId, DateTime date, double quantity,
 			String unit, String meal, Calorie needs, Calorie remaining) {
 		super();
 		this.userId = userId;
@@ -45,10 +45,10 @@ public class Diet_diary {
 	public void setDate(DateTime date) {
 		this.date = date;
 	}
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 	public String getUnit() {

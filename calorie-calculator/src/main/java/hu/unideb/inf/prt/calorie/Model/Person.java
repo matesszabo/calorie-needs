@@ -8,12 +8,14 @@ public class Person {
 	private int excercise;
 	private String gender;
 	private int goal;
+	private String uname;
+	private String password;
 	//private double weight_change;
 	private double BMI;
 	private double BMR;
 	private Calorie needs;
 	
-	public Person(int id, int height, double weight, int year, int excercise,
+	public Person(int id,String uname,String password, int height, double weight, int year, int excercise,
 			String gender, int goal) {
 		super();
 		this.id=id;
@@ -23,13 +25,41 @@ public class Person {
 		this.excercise = excercise;
 		this.gender = gender;
 		this.goal = goal;
+		this.uname=uname;
+		this.password=password;
+		
 		//this.weight_change = weight_change;
 	}
+	
+
+	public Person(int id, String uname, String password) {
+		super();
+		this.id = id;
+		this.uname = uname;
+		this.password = password;
+	}
+
 
 	public Person() {
 		super();
 	}
 	
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
 
 	public int getId() {
 		return id;
