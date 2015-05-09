@@ -132,6 +132,46 @@ public class DAO {
 				e.printStackTrace();
 			}
 	}
+	
+	public void updateFood(Food food){
+		try{
+			Connection conn=ConnectionFactory.getConnection();
+			PreparedStatement ps=conn.prepareStatement("UPDATE KAJAK SET NEV=? , KALORIA=? , SZENHIDRAT=? , ZSIR=? , FEHERJE=? , MENNYISEG=? , MERT_E=? WHERE ID=? AND USER_ID!=0");
+			
+			ps.setString(1, food.getName());
+			ps.setDouble(2, food.getCalorie().getKcal());
+			ps.setDouble(3, food.getCalorie().getCarbohydrate());
+			ps.setDouble(4, food.getCalorie().getFat());
+			ps.setDouble(5, food.getCalorie().getProtein());
+			ps.setDouble(6, food.getQuantity());
+			ps.setString(7, food.getUnit());
+			ps.setInt(8, food.getId());
+			
+			ps.executeUpdate();
+			
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateUser(Person person){
+		try{
+			Connection conn= ConnectionFactory.getConnection();
+			PreparedStatement ps = conn.prepareStatement("UPDATE FELHASZNALO SET MAGASSAG=? , SULY=? , EV=? , MOZGAS=? , NEM=? , CEL=? WHERE ID=?");
+			ps.setDouble(1, person.getHeight());
+			ps.setDouble(2, person.getWeight());
+			ps.setDouble(3, person.getYear());
+			ps.setDouble(4, person.getExcercise());
+			ps.setString(5, person.getGender());
+			ps.setDouble(6, person.getGoal());
+			ps.setInt(7, person.getId());
+			ps.executeUpdate();
+			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+	}
 
 
 	

@@ -18,10 +18,22 @@ public class Main {
 		DAO dao = new DAO();
 		
 		
-		Person persontest= new Person(2, "test", "test");
+		/*Person persontest= new Person(2, "test", "test");
 		dao.insertUser(persontest);
 		Diet_diary diary= new Diet_diary(1, 2, DateTime.now(), 300, "g", "reggeli", new Calorie(100.5,50.4, 20.9, 7.4), new Calorie(200, 100, 30, 15));
-		dao.insertDiary(diary);
+		dao.insertDiary(diary);*/
+		/*Person person=dao.getPersonlist().get(1);
+		person.setHeight(180);
+		person.setWeight(90);
+		person.setYear(30);
+		person.setExcercise(3);
+		person.setGender("nö");
+		person.setGoal(0-1);
+		dao.updateUser(person);
+		
+		Food somefood=dao.getFoodlist().get(2);
+		somefood.setName(somefood.getName()+"átírtam");
+		dao.updateFood(somefood);*/
 		
 		List<Food> foodlist= dao.getFoodlist();
 		
@@ -31,8 +43,8 @@ public class Main {
 
 		List<Person> personlist = dao.getPersonlist();
 		
-		for (Person person : personlist) {
-			System.out.println(person);
+		for (Person ppl : personlist) {
+			System.out.println(ppl);
 		}
 		
 		List<Diet_diary> diarylist= dao.getDiet_diarylist();
