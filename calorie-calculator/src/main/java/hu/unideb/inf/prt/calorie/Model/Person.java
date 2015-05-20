@@ -7,7 +7,7 @@ public class Person {
 	private int year;
 	private int excercise;
 	private String gender;
-	private int goal;
+	private double goal;
 	private String uname;
 	private String password;
 	//private double weight_change;
@@ -16,7 +16,7 @@ public class Person {
 	private Calorie needs;
 	
 	public Person(int id,String uname,String password, int height, double weight, int year, int excercise,
-			String gender, int goal) {
+			String gender, double goal) {
 		super();
 		this.id=id;
 		this.height = height;
@@ -109,11 +109,11 @@ public class Person {
 		this.gender = gender;
 	}
 
-	public int getGoal() {
+	public double getGoal() {
 		return goal;
 	}
 
-	public void setGoal(int goal) {
+	public void setGoal(double goal) {
 		this.goal = goal;
 	}
 
