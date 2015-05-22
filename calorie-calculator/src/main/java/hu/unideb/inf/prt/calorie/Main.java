@@ -51,6 +51,8 @@ public class Main {
 		for (Diet_diary diet_diary : diarylist) {
 			System.out.println(diet_diary);
 		}
+		
+		System.out.println(dao.getDateByUserId(1));
 	}
 
 }

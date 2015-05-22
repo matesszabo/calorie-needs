@@ -4,6 +4,7 @@ import hu.unideb.inf.prt.calorie.Model.Calorie;
 import hu.unideb.inf.prt.calorie.Model.Diet_diary;
 import hu.unideb.inf.prt.calorie.Model.Food;
 import hu.unideb.inf.prt.calorie.Model.Person;
+import hu.unideb.inf.prt.calorie.Model.Person_date;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -22,7 +23,7 @@ public class DAO {
 		try{
 		Connection conn= ConnectionFactory.getConnection();
 		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM KAJAK");
+		ResultSet rs = s.executeQuery("SELECT * FROM KAJAK ORDER BY ID ASC");
 		while(rs.next())
 		{
 			Food food = new Food(rs.getInt(1),rs.getInt(2),rs.getString(3),new Calorie(rs.getDouble(4),rs.getDouble(5),rs.getDouble(6),rs.getDouble(7)),rs.getDouble(8),rs.getString(9));
@@ -39,16 +40,24 @@ public class DAO {
 		try{
 		Connection conn= ConnectionFactory.getConnection();
 		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM FELHASZNALO");
+		ResultSet rs = s.executeQuery("SELECT * FROM FELHASZNALO_P");
 		while(rs.next())
 		{
-			Person person = new Person(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getString(8),rs.getInt(9));
+			int id=rs.getInt(1);
+			Person_date pd=new Person_date();
+			pd=getLatestPersonInfoById(id);
+			Person person= new Person(id,rs.getInt(4),new DateTime(rs.getDate(5)),pd, rs.getString(6),rs.getString(2),rs.getString(3));
 			personlist.add(person);
+			System.out.println(person);
 		}
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return personlist;
+	}
+	public List<Person> getPersonListWithAdditional(){
+		return null;
+		
 	}
 	
 	public List<Diet_diary> getDiet_diarylist(){
@@ -66,6 +75,38 @@ public class DAO {
 			e.printStackTrace();
 		}
 		return dietlist;
+	}
+	
+	public DateTime getDateByUserId(int id){
+		DateTime date=null;
+		try{
+		Connection conn= ConnectionFactory.getConnection();
+		Statement s = conn.createStatement();
+		ResultSet rs = s.executeQuery("SELECT FELH_ID,MAX(DATUM) FROM FELHASZNALO_NAPLO WHERE FELH_ID="+id+" GROUP BY FELH_ID");
+		while(rs.next())
+		{
+			date=new DateTime(rs.getDate(2));
+		}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return date;
+	}
+	
+	public Person_date getLatestPersonInfoById(int id){
+		Person_date person=null;
+		try{
+		Connection conn= ConnectionFactory.getConnection();
+		Statement s = conn.createStatement();
+		ResultSet rs = s.executeQuery("SELECT FELH_ID,MAX(DATUM),TESTSULY,MOZGAS,CEL FROM FELHASZNALO_NAPLO where felh_id="+id+" GROUP BY FELH_ID,TESTSULY,MOZGAS,CEL");
+		while(rs.next())
+		{
+			 person= new Person_date(new DateTime(rs.getDate(2)),rs.getDouble(3),rs.getInt(4),rs.getDouble(5));
+					}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return person;
 	}
 	
 	public void insertFood(Food food){
@@ -155,7 +196,7 @@ public class DAO {
 		}
 	}
 	
-	public void updateUser(Person person){
+	/*public void updateUser(Person person){
 		try{
 			Connection conn= ConnectionFactory.getConnection();
 			PreparedStatement ps = conn.prepareStatement("UPDATE FELHASZNALO SET MAGASSAG=? , SULY=? , EV=? , MOZGAS=? , NEM=? , CEL=? WHERE ID=?");
@@ -171,7 +212,7 @@ public class DAO {
 			}catch(SQLException e){
 				e.printStackTrace();
 			}
-	}
+	}*/
 
 
 	

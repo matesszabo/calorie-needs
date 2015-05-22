@@ -1,13 +1,13 @@
 package hu.unideb.inf.prt.calorie.Model;
 
+import org.joda.time.DateTime;
+
 public class Person {
 	private int id;
 	private int height;
-	private double weight;
-	private int year;
-	private int excercise;
+	private DateTime born;
+	private Person_date daily;
 	private String gender;
-	private double goal;
 	private String uname;
 	private String password;
 	//private double weight_change;
@@ -15,21 +15,7 @@ public class Person {
 	private double BMR;
 	private Calorie needs;
 	
-	public Person(int id,String uname,String password, int height, double weight, int year, int excercise,
-			String gender, double goal) {
-		super();
-		this.id=id;
-		this.height = height;
-		this.weight = weight;
-		this.year = year;
-		this.excercise = excercise;
-		this.gender = gender;
-		this.goal = goal;
-		this.uname=uname;
-		this.password=password;
-		
-		//this.weight_change = weight_change;
-	}
+	
 	
 
 	public Person(int id, String uname, String password) {
@@ -77,29 +63,7 @@ public class Person {
 		this.height = height;
 	}
 
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
-	}
-
-	public int getExcercise() {
-		return excercise;
-	}
-
-	public void setExcercise(int excercise) {
-		this.excercise = excercise;
-	}
+	
 
 	public String getGender() {
 		return gender;
@@ -108,14 +72,46 @@ public class Person {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
 
-	public double getGoal() {
-		return goal;
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", height=" + height + ", born=" + born
+				+ ", daily=" + daily + ", gender=" + gender + ", uname="
+				+ uname + ", password=" + password + ", BMI=" + BMI + ", BMR="
+				+ BMR + ", needs=" + needs + "]";
 	}
 
-	public void setGoal(double goal) {
-		this.goal = goal;
+
+	public Person(int id, int height, DateTime born, Person_date daily,
+			String gender, String uname, String password) {
+		super();
+		this.id = id;
+		this.height = height;
+		this.born = born;
+		this.daily = daily;
+		this.gender = gender;
+		this.uname = uname;
+		this.password = password;
 	}
+
+
+	public Person(int id, int height, DateTime born, Person_date daily,
+			String gender, String uname, String password, double bMI,
+			double bMR, Calorie needs) {
+		super();
+		this.id = id;
+		this.height = height;
+		this.born = born;
+		this.daily = daily;
+		this.gender = gender;
+		this.uname = uname;
+		this.password = password;
+		BMI = bMI;
+		BMR = bMR;
+		this.needs = needs;
+	}
+
 
 	/*public double getWeight_change() {
 		return weight_change;
@@ -124,6 +120,26 @@ public class Person {
 	public void setWeight_change(double weight_change) {
 		this.weight_change = weight_change;
 	}*/
+
+	public DateTime getBorn() {
+		return born;
+	}
+
+
+	public void setBorn(DateTime born) {
+		this.born = born;
+	}
+
+
+	public Person_date getDaily() {
+		return daily;
+	}
+
+
+	public void setDaily(Person_date daily) {
+		this.daily = daily;
+	}
+
 
 	public double getBMI() {
 		return BMI;
@@ -149,13 +165,7 @@ public class Person {
 		this.needs = needs;
 	}
 
-	@Override
-	public String toString() {
-		return "Person [id=" + id + ", height=" + height + ", weight=" + weight
-				+ ", year=" + year + ", excercise=" + excercise + ", gender="
-				+ gender + ", goal=" + goal + ", BMI=" + BMI + ", BMR=" + BMR + ", needs="
-				+ needs + "]";
-	}
+	
 	
 	
 	
