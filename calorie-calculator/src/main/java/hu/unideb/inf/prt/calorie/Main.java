@@ -53,6 +53,8 @@ public class Main {
 		}
 		
 		System.out.println(dao.getDateByUserId(1));
+		
+		System.out.println(dao.getUserId("admin", "admin"));
 	}
 
 }

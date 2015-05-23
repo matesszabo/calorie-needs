@@ -93,6 +93,24 @@ public class DAO {
 		return date;
 	}
 	
+	public int getUserId(String uname, String passw){
+		int UID=0;
+		uname="'"+uname+"'";
+		passw="'"+passw+"'";
+		try{
+		Connection conn= ConnectionFactory.getConnection();
+		Statement s = conn.createStatement();
+		ResultSet rs = s.executeQuery("SELECT ID FROM FELHASZNALO_P WHERE FELHNEV="+uname+" AND JELSZO="+passw);
+		while(rs.next())
+		{
+			UID=rs.getInt(1);
+		}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return UID;
+	}
+	
 	public Person_date getLatestPersonInfoById(int id){
 		Person_date person=null;
 		try{
@@ -142,6 +160,39 @@ public class DAO {
 			ps.setDouble(7, 1);
 			ps.setString(8, "férfi");
 			ps.setDouble(9, 1);
+			ps.executeUpdate();
+			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+	}
+	
+	public void insertUser_P(Person person){
+		try{
+			Connection conn= ConnectionFactory.getConnection();
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO FELHASZNALO_P (ID,FELHNEV,JELSZO,MAGASSAG,SZUL,NEM) VALUES(?,?,?,?,?,?)");
+			ps.setInt(1, person.getId());
+			ps.setString(2, person.getUname());
+			ps.setString(3, person.getPassword());
+			ps.setDouble(4, person.getHeight());
+			ps.setDate(5,new Date( person.getBorn().getMillis()));
+			ps.setString(8, "férfi");
+			ps.executeUpdate();
+			
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+	}
+	
+	public void insertUser_Diary(Person person){
+		try{
+			Connection conn= ConnectionFactory.getConnection();
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO FELHASZNALO_NAPLO (ID,DATUM,TESTSULY,MOZGAS,CEL) VALUES(?,?,?,?,?)");
+			ps.setInt(1, person.getId());
+			ps.setDate(2, new Date(person.getDaily().getDate().getMillis()));
+			ps.setDouble(3, person.getDaily().getWeight());
+			ps.setInt(4, person.getDaily().getExcercise());
+			ps.setDouble(5, person.getDaily().getGoal());
 			ps.executeUpdate();
 			
 			}catch(SQLException e){
