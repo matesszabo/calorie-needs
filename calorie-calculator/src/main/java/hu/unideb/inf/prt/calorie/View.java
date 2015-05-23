@@ -14,6 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JProgressBar;
+import javax.swing.JList;
+import java.awt.ComponentOrientation;
+import javax.swing.ListSelectionModel;
+import java.awt.Dimension;
 
 public class View {
 
@@ -40,6 +45,12 @@ public class View {
 	private JButton btnRegister_1;
 	private JButton btnCancel;
 	private JLayeredPane layeredPane;
+	private JList list;
+	private JButton btnAddFood;
+	private JButton btnRemoveFood;
+	private JPanel panel_4;
+	private JTextField txtWeight_1;
+	private JTextField txtGoal;
 
 	/**
 	 * Launch the application.
@@ -112,6 +123,12 @@ public class View {
 		panel.add(lblPassword);
 		
 		btnLogIn = new JButton("Log in");
+		btnLogIn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ActivateLayer(2, layeredPane);
+			}
+		});
 		btnLogIn.setBounds(171, 164, 89, 23);
 		panel.add(btnLogIn);
 		
@@ -201,5 +218,131 @@ public class View {
 		btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(65, 186, 89, 23);
 		panel_1.add(btnCancel);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setVisible(false);
+		layeredPane.setLayer(panel_2, 2);
+		panel_2.setBounds(0, 0, 434, 261);
+		layeredPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JLabel lblCalories = new JLabel("Calories");
+		lblCalories.setBounds(10, 86, 56, 14);
+		panel_2.add(lblCalories);
+		
+		JLabel lblCarbohydrate = new JLabel("Carbohydrate");
+		lblCarbohydrate.setBounds(10, 116, 72, 14);
+		panel_2.add(lblCarbohydrate);
+		
+		JLabel lblProtein = new JLabel("Protein");
+		lblProtein.setBounds(10, 146, 46, 14);
+		panel_2.add(lblProtein);
+		
+		JLabel lblFat = new JLabel("Fat");
+		lblFat.setBounds(10, 176, 46, 14);
+		panel_2.add(lblFat);
+		
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setBounds(110, 86, 190, 14);
+		panel_2.add(progressBar);
+		
+		JProgressBar progressBar_1 = new JProgressBar();
+		progressBar_1.setBounds(110, 116, 190, 14);
+		panel_2.add(progressBar_1);
+		
+		JProgressBar progressBar_2 = new JProgressBar();
+		progressBar_2.setBounds(110, 146, 190, 14);
+		panel_2.add(progressBar_2);
+		
+		JProgressBar progressBar_3 = new JProgressBar();
+		progressBar_3.setBounds(110, 176, 190, 14);
+		panel_2.add(progressBar_3);
+		
+		JLabel label = new JLabel("0/0");
+		label.setBounds(320, 86, 104, 14);
+		panel_2.add(label);
+		
+		JLabel label_1 = new JLabel("0/0");
+		label_1.setBounds(320, 116, 104, 14);
+		panel_2.add(label_1);
+		
+		JLabel label_2 = new JLabel("0/0");
+		label_2.setBounds(320, 146, 104, 14);
+		panel_2.add(label_2);
+		
+		JLabel label_3 = new JLabel("0/0");
+		label_3.setBounds(320, 176, 104, 14);
+		panel_2.add(label_3);
+		
+		JLabel lblCurrentHealthStatus = new JLabel("Current health status:");
+		lblCurrentHealthStatus.setBounds(110, 61, 190, 14);
+		panel_2.add(lblCurrentHealthStatus);
+		
+		JButton btnChangeData = new JButton("Change data");
+		btnChangeData.setBounds(110, 27, 118, 23);
+		panel_2.add(btnChangeData);
+		
+		JButton btnAddMeal = new JButton("Add meal");
+		btnAddMeal.setBounds(335, 11, 89, 23);
+		panel_2.add(btnAddMeal);
+		
+		JButton btnStatistics = new JButton("Statistics");
+		btnStatistics.setBounds(335, 45, 89, 23);
+		panel_2.add(btnStatistics);
+		
+		JButton btnRecipes = new JButton("Recipes");
+		btnRecipes.setBounds(10, 11, 89, 39);
+		panel_2.add(btnRecipes);
+		
+		JPanel panel_3 = new JPanel();
+		layeredPane.setLayer(panel_3, 3);
+		panel_3.setBounds(0, 0, 434, 261);
+		layeredPane.add(panel_3);
+		panel_3.setLayout(null);
+		
+		list = new JList();
+		list.setLocation(10, 5);
+		list.setPreferredSize(new Dimension(200, 250));
+		list.setSize(new Dimension(290, 250));
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		panel_3.add(list);
+		
+		btnAddFood = new JButton("Add food");
+		btnAddFood.setBounds(310, 27, 99, 23);
+		panel_3.add(btnAddFood);
+		
+		btnRemoveFood = new JButton("Remove Food");
+		btnRemoveFood.setBounds(310, 61, 99, 23);
+		panel_3.add(btnRemoveFood);
+		
+		panel_4 = new JPanel();
+		layeredPane.setLayer(panel_4, 4);
+		panel_4.setBounds(0, 0, 434, 261);
+		layeredPane.add(panel_4);
+		panel_4.setLayout(null);
+		
+		txtWeight_1 = new JTextField();
+		txtWeight_1.setText("Weight");
+		txtWeight_1.setBounds(233, 62, 86, 20);
+		panel_4.add(txtWeight_1);
+		txtWeight_1.setColumns(10);
+		
+		txtGoal = new JTextField();
+		txtGoal.setText("Goal");
+		txtGoal.setBounds(233, 172, 86, 20);
+		panel_4.add(txtGoal);
+		txtGoal.setColumns(10);
+		
+		JLabel lblYourCurrentWeight = new JLabel("Your current weight");
+		lblYourCurrentWeight.setBounds(10, 65, 184, 14);
+		panel_4.add(lblYourCurrentWeight);
+		
+		JLabel lblTheWeightYou = new JLabel("The weight you want to gain per week");
+		lblTheWeightYou.setBounds(10, 175, 184, 14);
+		panel_4.add(lblTheWeightYou);
+		
+		JLabel lblYourExcerciseLevel = new JLabel("Your excercise level");
+		lblYourExcerciseLevel.setBounds(10, 120, 184, 14);
+		panel_4.add(lblYourExcerciseLevel);
 	}
 }
