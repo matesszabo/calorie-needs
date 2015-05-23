@@ -19,6 +19,8 @@ import javax.swing.JList;
 import java.awt.ComponentOrientation;
 import javax.swing.ListSelectionModel;
 import java.awt.Dimension;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class View {
 
@@ -51,6 +53,8 @@ public class View {
 	private JPanel panel_4;
 	private JTextField txtWeight_1;
 	private JTextField txtGoal;
+	private JComboBox comboBox_1;
+	private JComboBox comboBox_2;
 
 	/**
 	 * Launch the application.
@@ -91,6 +95,7 @@ public class View {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -212,10 +217,22 @@ public class View {
 		panel_1.add(lblWeight);
 		
 		btnRegister_1 = new JButton("Register");
+		btnRegister_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(0, layeredPane);
+			}
+		});
 		btnRegister_1.setBounds(65, 152, 89, 23);
 		panel_1.add(btnRegister_1);
 		
 		btnCancel = new JButton("Cancel");
+		btnCancel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ActivateLayer(0, layeredPane);
+			}
+		});
 		btnCancel.setBounds(65, 186, 89, 23);
 		panel_1.add(btnCancel);
 		
@@ -279,22 +296,47 @@ public class View {
 		panel_2.add(lblCurrentHealthStatus);
 		
 		JButton btnChangeData = new JButton("Change data");
+		btnChangeData.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(4, layeredPane);
+			}
+		});
 		btnChangeData.setBounds(110, 27, 118, 23);
 		panel_2.add(btnChangeData);
 		
 		JButton btnAddMeal = new JButton("Add meal");
+		btnAddMeal.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(5, layeredPane);
+			}
+		});
 		btnAddMeal.setBounds(335, 11, 89, 23);
 		panel_2.add(btnAddMeal);
 		
 		JButton btnStatistics = new JButton("Statistics");
+		btnStatistics.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(6, layeredPane);
+			}
+		});
 		btnStatistics.setBounds(335, 45, 89, 23);
 		panel_2.add(btnStatistics);
 		
 		JButton btnRecipes = new JButton("Recipes");
+		btnRecipes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(3, layeredPane);
+			}
+		});
 		btnRecipes.setBounds(10, 11, 89, 39);
 		panel_2.add(btnRecipes);
 		
 		JPanel panel_3 = new JPanel();
+		panel_3.setVisible(false);
 		layeredPane.setLayer(panel_3, 3);
 		panel_3.setBounds(0, 0, 434, 261);
 		layeredPane.add(panel_3);
@@ -315,7 +357,18 @@ public class View {
 		btnRemoveFood.setBounds(310, 61, 99, 23);
 		panel_3.add(btnRemoveFood);
 		
+		JButton btnBack_1 = new JButton("Back");
+		btnBack_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(2, layeredPane);
+			}
+		});
+		btnBack_1.setBounds(310, 95, 99, 23);
+		panel_3.add(btnBack_1);
+		
 		panel_4 = new JPanel();
+		panel_4.setVisible(false);
 		layeredPane.setLayer(panel_4, 4);
 		panel_4.setBounds(0, 0, 434, 261);
 		layeredPane.add(panel_4);
@@ -334,15 +387,147 @@ public class View {
 		txtGoal.setColumns(10);
 		
 		JLabel lblYourCurrentWeight = new JLabel("Your current weight");
-		lblYourCurrentWeight.setBounds(10, 65, 184, 14);
+		lblYourCurrentWeight.setBounds(10, 65, 150, 14);
 		panel_4.add(lblYourCurrentWeight);
 		
-		JLabel lblTheWeightYou = new JLabel("The weight you want to gain per week");
-		lblTheWeightYou.setBounds(10, 175, 184, 14);
+		JLabel lblTheWeightYou = new JLabel("Weight to gain per week");
+		lblTheWeightYou.setBounds(10, 175, 150, 14);
 		panel_4.add(lblTheWeightYou);
 		
 		JLabel lblYourExcerciseLevel = new JLabel("Your excercise level");
-		lblYourExcerciseLevel.setBounds(10, 120, 184, 14);
+		lblYourExcerciseLevel.setBounds(10, 120, 150, 14);
 		panel_4.add(lblYourExcerciseLevel);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Little to no excercise", "Light excercise(1-3 days per week)", "Moderate excercise(3-5 days per week)", "Heavy excercise(6-7 days per week)", "Very heavy excercise(twice per day, extra heavy workouts)"}));
+		comboBox.setBounds(180, 114, 225, 20);
+		panel_4.add(comboBox);
+		
+		JButton btnOkay = new JButton("Okay");
+		btnOkay.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(2, layeredPane);
+			}
+		});
+		btnOkay.setBounds(100, 220, 89, 23);
+		panel_4.add(btnOkay);
+		
+		JButton btnCancel_2 = new JButton("Cancel");
+		btnCancel_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(2, layeredPane);
+			}
+		});
+		btnCancel_2.setBounds(225, 220, 89, 23);
+		panel_4.add(btnCancel_2);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setVisible(false);
+		layeredPane.setLayer(panel_5, 5);
+		panel_5.setBounds(0, 0, 434, 261);
+		layeredPane.add(panel_5);
+		panel_5.setLayout(null);
+		
+		comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Breakfast", "Lunch", "Dinner", "Snack", "Other"}));
+		comboBox_1.setBounds(10, 91, 105, 50);
+		panel_5.add(comboBox_1);
+		
+		comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(159, 93, 265, 50);
+		panel_5.add(comboBox_2);
+		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.setBounds(182, 203, 89, 23);
+		panel_5.add(btnAdd);
+		
+		JButton btnCancel_1 = new JButton("Cancel");
+		btnCancel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(2, layeredPane);
+			}
+		});
+		btnCancel_1.setBounds(308, 203, 89, 23);
+		panel_5.add(btnCancel_1);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setVisible(false);
+		layeredPane.setLayer(panel_6, 6);
+		panel_6.setBounds(0, 0, 434, 261);
+		layeredPane.add(panel_6);
+		panel_6.setLayout(null);
+		
+		JLabel lblAverage = new JLabel("Average");
+		lblAverage.setBounds(40, 68, 95, 14);
+		panel_6.add(lblAverage);
+		
+		JLabel lblCalorie = new JLabel("Calorie");
+		lblCalorie.setBounds(68, 93, 67, 14);
+		panel_6.add(lblCalorie);
+		
+		JLabel lblCarbohydrate_1 = new JLabel("Carbohydrate");
+		lblCarbohydrate_1.setBounds(68, 118, 78, 14);
+		panel_6.add(lblCarbohydrate_1);
+		
+		JLabel lblProtein_1 = new JLabel("Protein");
+		lblProtein_1.setBounds(68, 143, 67, 14);
+		panel_6.add(lblProtein_1);
+		
+		JLabel lblFat_1 = new JLabel("Fat");
+		lblFat_1.setBounds(68, 168, 67, 14);
+		panel_6.add(lblFat_1);
+		
+		JLabel lblCalorieInPercent = new JLabel("Calorie in percent");
+		lblCalorieInPercent.setBounds(168, 93, 124, 14);
+		panel_6.add(lblCalorieInPercent);
+		
+		JLabel lblCarbohydrateInPercent = new JLabel("Carbohydrate in percent");
+		lblCarbohydrateInPercent.setBounds(168, 118, 149, 14);
+		panel_6.add(lblCarbohydrateInPercent);
+		
+		JLabel lblProteinInPercent = new JLabel("Protein in percent");
+		lblProteinInPercent.setBounds(168, 143, 124, 14);
+		panel_6.add(lblProteinInPercent);
+		
+		JLabel lblFatInPercent = new JLabel("Fat in percent");
+		lblFatInPercent.setBounds(168, 168, 124, 14);
+		panel_6.add(lblFatInPercent);
+		
+		JLabel lblPercentOfFoods = new JLabel("Percent of foods");
+		lblPercentOfFoods.setBounds(168, 68, 124, 14);
+		panel_6.add(lblPercentOfFoods);
+		
+		JLabel lblAverageWeight = new JLabel("Average weight");
+		lblAverageWeight.setBounds(40, 214, 95, 14);
+		panel_6.add(lblAverageWeight);
+		
+		JLabel lblSinceTheRegistration = new JLabel("Since the registration");
+		lblSinceTheRegistration.setBounds(145, 214, 124, 14);
+		panel_6.add(lblSinceTheRegistration);
+		
+		JLabel lblWeightOnThe = new JLabel("Weight on the specified date");
+		lblWeightOnThe.setBounds(40, 23, 167, 14);
+		panel_6.add(lblWeightOnThe);
+		
+		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3.setBounds(217, 20, 138, 20);
+		panel_6.add(comboBox_3);
+		
+		JLabel lblWeight_1 = new JLabel("Weight");
+		lblWeight_1.setBounds(365, 23, 46, 14);
+		panel_6.add(lblWeight_1);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActivateLayer(2, layeredPane);
+			}
+		});
+		btnBack.setBounds(335, 227, 89, 23);
+		panel_6.add(btnBack);
 	}
 }
