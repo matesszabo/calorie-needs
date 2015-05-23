@@ -1,8 +1,12 @@
 package hu.unideb.inf.prt.calorie.Service;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
+import hu.unideb.inf.prt.calorie.DAO.DAO;
 import hu.unideb.inf.prt.calorie.Model.Calorie;
+import hu.unideb.inf.prt.calorie.Model.Food;
 import hu.unideb.inf.prt.calorie.Model.Person;
 
 public class Service {
@@ -30,6 +34,21 @@ public class Service {
 			calorie.setFat(calorie.getKcal()*0.3);
 			person.setNeeds(calorie);
 		}
+	}
+	
+	public boolean existsUser(String uname, String passw){
+		DAO dao= new DAO();
+		return dao.getUserId(uname, passw)==-1?false:true;
+	}
+	
+	public boolean existsUserByUname(String uname){
+		DAO dao= new DAO();
+		return dao.getUserIdByUname(uname)==-1?false:true;
+	}
+	
+	public List<Food>getFoodListByUserId(int id){
+		DAO dao= new DAO();
+		return dao.getFoodlistByUser(id);
 	}
 	
 	

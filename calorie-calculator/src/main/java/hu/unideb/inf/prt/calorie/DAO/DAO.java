@@ -35,6 +35,23 @@ public class DAO {
 		return foodlist;
 	}
 	
+	public List<Food> getFoodlistByUser(int id){
+		List<Food> foodlist= new ArrayList<Food>();
+		try{
+		Connection conn= ConnectionFactory.getConnection();
+		Statement s = conn.createStatement();
+		ResultSet rs = s.executeQuery("SELECT * FROM KAJAK WHERE USER_ID=0 OR USER_ID="+id+" ORDER BY ID ASC");
+		while(rs.next())
+		{
+			Food food = new Food(rs.getInt(1),rs.getInt(2),rs.getString(3),new Calorie(rs.getDouble(4),rs.getDouble(5),rs.getDouble(6),rs.getDouble(7)),rs.getDouble(8),rs.getString(9));
+			foodlist.add(food);
+		}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return foodlist;
+	}
+	
 	public List<Person> getPersonlist(){
 		List<Person> personlist= new ArrayList<Person>();
 		try{
@@ -94,13 +111,30 @@ public class DAO {
 	}
 	
 	public int getUserId(String uname, String passw){
-		int UID=0;
+		int UID=-1;
 		uname="'"+uname+"'";
 		passw="'"+passw+"'";
 		try{
 		Connection conn= ConnectionFactory.getConnection();
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery("SELECT ID FROM FELHASZNALO_P WHERE FELHNEV="+uname+" AND JELSZO="+passw);
+		while(rs.next())
+		{
+			UID=rs.getInt(1);
+		}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return UID;
+	}
+	
+	public int getUserIdByUname(String uname){
+		int UID=-1;
+		uname="'"+uname+"'";
+		try{
+		Connection conn= ConnectionFactory.getConnection();
+		Statement s = conn.createStatement();
+		ResultSet rs = s.executeQuery("SELECT ID FROM FELHASZNALO_P WHERE FELHNEV="+uname);
 		while(rs.next())
 		{
 			UID=rs.getInt(1);

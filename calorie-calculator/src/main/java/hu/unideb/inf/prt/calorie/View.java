@@ -1,5 +1,8 @@
 package hu.unideb.inf.prt.calorie;
 
+import hu.unideb.inf.prt.calorie.Model.Food;
+import hu.unideb.inf.prt.calorie.Service.Service;
+
 import java.awt.Component;
 import java.awt.EventQueue;
 
@@ -9,31 +12,45 @@ import javax.swing.JLayeredPane;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JProgressBar;
 import javax.swing.JList;
+
 import java.awt.ComponentOrientation;
+
 import javax.swing.ListSelectionModel;
+
 import java.awt.Dimension;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.ScrollPaneConstants;
 
 public class View {
 
 	private JFrame frame;
 	private JTextField txtUsername;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 	private JLabel lblUsername;
 	private JLabel lblPassword;
 	private JButton btnLogIn;
 	private JButton btnRegister;
 	private JPanel panel_1;
 	private JTextField txtUsername_1;
-	private JTextField txtPassword_1;
+	private JPasswordField txtPassword_1;
 	private JTextField txtHeight;
 	private JTextField txtBorn;
 	private JTextField txtGender;
@@ -47,7 +64,7 @@ public class View {
 	private JButton btnRegister_1;
 	private JButton btnCancel;
 	private JLayeredPane layeredPane;
-	private JList list;
+	private JList<Food> list;
 	private JButton btnAddFood;
 	private JButton btnRemoveFood;
 	private JPanel panel_4;
@@ -94,6 +111,7 @@ public class View {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 300);
@@ -108,12 +126,40 @@ public class View {
 		panel.setLayout(null);
 		
 		txtUsername = new JTextField();
+		txtUsername.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER){
+					Service service= new Service();
+					if(service.existsUser(txtUsername.getText(), txtPassword.getText()))
+					ActivateLayer(2, layeredPane);
+					else{
+						txtUsername.setText("Try again");
+						txtPassword.setText("Try again");
+					}
+				}
+			}
+		});
 		txtUsername.setBounds(81, 122, 86, 20);
 		txtUsername.setText("Username");
 		panel.add(txtUsername);
 		txtUsername.setColumns(10);
 		
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
+		txtPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER){
+					Service service= new Service();
+					if(service.existsUser(txtUsername.getText(), txtPassword.getText()))
+					ActivateLayer(2, layeredPane);
+					else{
+						txtUsername.setText("Try again");
+						txtPassword.setText("Try again");
+					}
+				}
+			}
+		});
 		txtPassword.setBounds(263, 122, 86, 20);
 		txtPassword.setText("Password");
 		panel.add(txtPassword);
@@ -131,7 +177,13 @@ public class View {
 		btnLogIn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				Service service= new Service();
+				if(service.existsUser(txtUsername.getText(), txtPassword.getText()))
 				ActivateLayer(2, layeredPane);
+				else{
+					txtUsername.setText("Try again");
+					txtPassword.setText("Try again");
+				}
 			}
 		});
 		btnLogIn.setBounds(171, 164, 89, 23);
@@ -162,7 +214,7 @@ public class View {
 		panel_1.add(txtUsername_1);
 		txtUsername_1.setColumns(10);
 		
-		txtPassword_1 = new JTextField();
+		txtPassword_1 = new JPasswordField();
 		txtPassword_1.setText("Password");
 		txtPassword_1.setBounds(94, 101, 86, 20);
 		panel_1.add(txtPassword_1);
@@ -220,7 +272,12 @@ public class View {
 		btnRegister_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Service service= new Service();
+				if(!service.existsUserByUname(txtUsername_1.getText()))
 				ActivateLayer(0, layeredPane);
+				else{
+					txtUsername_1.setText("Reserved");
+				}
 			}
 		});
 		btnRegister_1.setBounds(65, 152, 89, 23);
@@ -329,11 +386,25 @@ public class View {
 		btnRecipes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Service service=new Service();
+				List<Food>tmp=service.getFoodListByUserId(1);
+				System.out.println(tmp.size());
+				list.setListData(tmp.toArray(new Food[tmp.size()]));
 				ActivateLayer(3, layeredPane);
 			}
 		});
 		btnRecipes.setBounds(10, 11, 89, 39);
 		panel_2.add(btnRecipes);
+		
+		JButton btnFoodLog = new JButton("Food log");
+		btnFoodLog.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ActivateLayer(7, layeredPane);
+			}
+		});
+		btnFoodLog.setBounds(50, 220, 89, 23);
+		panel_2.add(btnFoodLog);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setVisible(false);
@@ -342,12 +413,24 @@ public class View {
 		layeredPane.add(panel_3);
 		panel_3.setLayout(null);
 		
-		list = new JList();
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setAutoscrolls(true);
+		scrollPane.setBounds(0, 0, 434, 225);
+		scrollPane.setWheelScrollingEnabled(true);
+		//scrollPane.setPreferredSize(preferredSize);
+		list = new JList<Food>();
+		list.setAutoscrolls(true);
 		list.setLocation(10, 5);
-		list.setPreferredSize(new Dimension(200, 250));
-		list.setSize(new Dimension(290, 250));
+		list.setPreferredSize(null);
+		//list.setSize(new Dimension(290, 250));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		panel_3.add(list);
+		scrollPane.add(list);
+		System.out.println(list.getModel().getSize());
+		scrollPane.setViewportView(list);
+		scrollPane.setVisible(true);
+		panel_3.add(scrollPane);
 		
 		btnAddFood = new JButton("Add food");
 		btnAddFood.setBounds(310, 27, 99, 23);
@@ -456,7 +539,7 @@ public class View {
 		JPanel panel_6 = new JPanel();
 		panel_6.setVisible(false);
 		layeredPane.setLayer(panel_6, 6);
-		panel_6.setBounds(0, 0, 434, 261);
+		panel_6.setBounds(0, 0, 444, 271);
 		layeredPane.add(panel_6);
 		panel_6.setLayout(null);
 		
@@ -529,5 +612,27 @@ public class View {
 		});
 		btnBack.setBounds(335, 227, 89, 23);
 		panel_6.add(btnBack);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setVisible(false);
+		layeredPane.setLayer(panel_7, 7);
+		panel_7.setBounds(0, 0, 444, 271);
+		layeredPane.add(panel_7);
+		panel_7.setLayout(null);
+		
+		JList list_1 = new JList();
+		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list_1.setBounds(10, 11, 424, 217);
+		panel_7.add(list_1);
+		
+		JButton btnBack_2 = new JButton("Back");
+		btnBack_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ActivateLayer(2, layeredPane);
+			}
+		});
+		btnBack_2.setBounds(317, 239, 89, 23);
+		panel_7.add(btnBack_2);
 	}
 }
