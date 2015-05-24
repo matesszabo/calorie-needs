@@ -47,6 +47,8 @@ import java.util.Vector;
 import javax.swing.ScrollPaneConstants;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -373,7 +375,15 @@ public class View {
 			public void mouseClicked(MouseEvent e) {
 				Service service= new Service();
 				if(!service.existsUserByUname(txtUsername_1.getText()))
-				ActivateLayer(0, layeredPane);
+				{
+					DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MMM-YY");
+					DateTime dt = DateTime.parse(txtBorn.getText(), fmt);
+					//String str = fmt.print(dt);
+					Person tmp=new Person(service.getMaxPersonId()+1,Integer.parseInt(txtHeight.getText()) , dt, new Person_date(DateTime.now(), Double.parseDouble(txtWeight.getText()), 1, 0), txtGender.getText(), txtUsername_1.getText(), txtPassword_1.getText(), 0, 0, new Calorie(0,0,0,0));
+					ActivateLayer(0, layeredPane);
+					service.registerUser(tmp);
+					service.insertUserDiary(tmp);
+				}
 				else{
 					txtUsername_1.setText("Reserved");
 				}

@@ -213,5 +213,16 @@ public class Service {
 		dao.deleteFood(food);}
 	}
 	
+	public void registerUser(Person person){
+		DAO dao= new DAO();
+		dao.insertUser_P(person);
+		dao.insertUser_Diary(person);
+	}
+	
+	public int getMaxPersonId(){
+		DAO dao= new DAO();
+		return dao.maxPersonId();
+	}
+	
 
 }

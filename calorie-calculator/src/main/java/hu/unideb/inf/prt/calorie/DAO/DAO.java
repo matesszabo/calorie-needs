@@ -33,7 +33,7 @@ public class DAO {
 			Food food = new Food(rs.getInt(1),rs.getInt(2),rs.getString(3),new Calorie(rs.getDouble(4),rs.getDouble(5),rs.getDouble(6),rs.getDouble(7)),rs.getDouble(8),rs.getString(9));
 			foodlist.add(food);
 		}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return foodlist;
@@ -47,7 +47,7 @@ public class DAO {
 			while(rs.next()){
 				weightMap.put(new DateTime(rs.getDate(1)), rs.getDouble(2));
 			}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		
@@ -66,7 +66,7 @@ public class DAO {
 				info[2]=rs.getDouble(4);
 				info[3]=rs.getDouble(5);
 			}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return info;
@@ -84,7 +84,7 @@ public class DAO {
 				
 			}
 			
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return calorielist;
@@ -108,7 +108,7 @@ public class DAO {
 				
 			}
 			
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return calorielist;
@@ -126,7 +126,7 @@ public class DAO {
 			while(rs.next()){
 				weights.add(rs.getDouble(1));
 			}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return weights;
@@ -143,7 +143,7 @@ public class DAO {
 			Food food = new Food(rs.getInt(1),rs.getInt(2),rs.getString(3),new Calorie(rs.getDouble(4),rs.getDouble(5),rs.getDouble(6),rs.getDouble(7)),rs.getDouble(8),rs.getString(9));
 			foodlist.add(food);
 		}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return foodlist;
@@ -164,7 +164,7 @@ public class DAO {
 			personlist.add(person);
 			System.out.println(person);
 		}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return personlist;
@@ -185,7 +185,7 @@ public class DAO {
 			Diet_diary diary= new Diet_diary(rs.getInt(1),rs.getInt(2),new DateTime(rs.getDate(3)) ,rs.getInt(4),rs.getString(5),rs.getString(6),new Calorie(rs.getInt(7),rs.getInt(8),rs.getInt(9),rs.getInt(10)),new Calorie(rs.getInt(11),rs.getInt(12),rs.getInt(13),rs.getInt(14)));
 			dietlist.add(diary);
 		}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return dietlist;
@@ -201,7 +201,7 @@ public class DAO {
 		{
 			date=new DateTime(rs.getDate(2));
 		}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return date;
@@ -218,7 +218,7 @@ public class DAO {
 		while(rs.next())
 		{
 			person=new Person(rs.getInt(1), rs.getInt(4), new DateTime(rs.getDate(5)), new Person_date(new DateTime(rs.getDate(8)), rs.getDouble(9), rs.getInt(10), rs.getDouble(11)), rs.getString(6), rs.getString(2), rs.getString(3));	break;	}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return person;
@@ -235,7 +235,7 @@ public class DAO {
 		{
 			UID=rs.getInt(1);
 		}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return UID;
@@ -249,7 +249,22 @@ public class DAO {
 			while(rs.next()){
 				id=rs.getInt(1);
 			}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return id;
+	}
+	
+	public int maxPersonId(){
+		int id=Integer.MAX_VALUE;
+		try{
+			Connection conn=ConnectionFactory.getConnection();
+			Statement s= conn.createStatement();
+			ResultSet rs=s.executeQuery("select max(id) from FELHASZNALO_P ");
+			while(rs.next()){
+				id=rs.getInt(1);
+			}
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return id;
@@ -265,7 +280,7 @@ public class DAO {
 		{
 			 person= new Person_date(new DateTime(rs.getDate(2)),rs.getDouble(3),rs.getInt(4),rs.getDouble(5));
 					}
-		}catch(SQLException e){
+		conn.close();}catch(SQLException e){
 			e.printStackTrace();
 		}
 		return person;
@@ -285,6 +300,7 @@ public class DAO {
 			ps.setDouble(8, food.getQuantity());
 			ps.setString(9, food.getUnit());
 			ps.executeUpdate();
+			conn.close();
 			
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -320,8 +336,9 @@ public class DAO {
 			ps.setString(3, person.getPassword());
 			ps.setDouble(4, person.getHeight());
 			ps.setDate(5,new Date( person.getBorn().getMillis()));
-			ps.setString(8, "férfi");
+			ps.setString(6, person.getGender());
 			ps.executeUpdate();
+			conn.close();
 			
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -338,6 +355,7 @@ public class DAO {
 			ps.setInt(4, person.getDaily().getExcercise());
 			ps.setDouble(5, person.getDaily().getGoal());
 			ps.executeUpdate();
+			conn.close();
 			
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -363,6 +381,7 @@ public class DAO {
 			ps.setDouble(13, diary.getRemaining().getFat());
 			ps.setDouble(14, diary.getRemaining().getProtein());
 			ps.executeUpdate();
+			conn.close();
 			
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -374,6 +393,7 @@ public class DAO {
 			Connection conn=ConnectionFactory.getConnection();
 			PreparedStatement ps=conn.prepareStatement("DELETE FROM KAJAK WHERE ID="+food.getId());
 			ps.executeQuery();
+			conn.close();
 			
 			
 		}catch(SQLException e){
@@ -396,7 +416,7 @@ public class DAO {
 			ps.setInt(8, food.getId());
 			
 			ps.executeUpdate();
-			
+			conn.close();
 			
 		}catch(SQLException e){
 			e.printStackTrace();
