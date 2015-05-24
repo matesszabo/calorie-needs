@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 
@@ -34,6 +36,59 @@ public class DAO {
 		}
 		return foodlist;
 	}
+	public Map<DateTime, Double>getWeightByID(int id){
+		Map<DateTime,Double>weightMap=new HashMap<DateTime, Double>();
+		try{
+			Connection conn=ConnectionFactory.getConnection();
+			Statement s=conn.createStatement();
+			ResultSet rs=s.executeQuery("SELECT DATUM,TESTSULY FROM FELHASZNALO_NAPLO WHERE FELH_ID="+id);
+			while(rs.next()){
+				weightMap.put(new DateTime(rs.getDate(1)), rs.getDouble(2));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return weightMap;
+	}
+	
+	public double[] getAverageByUser(int id){
+		double[] info= new double[4];
+		try{
+			Connection conn=ConnectionFactory.getConnection();
+			Statement s=conn.createStatement();
+			ResultSet rs=s.executeQuery("SELECT FELH_ID,avg(KALORIA),AVG(SZENHIDRAT),AVG(ZSIR),AVG(FEHERJE) FROM NAPLO INNER JOIN KAJAK ON KAJA_ID=ID where felh_id="+id+" GROUP BY FELH_ID");
+			while(rs.next()){
+				info[0]=rs.getDouble(2);
+				info[1]=rs.getDouble(3);
+				info[2]=rs.getDouble(4);
+				info[3]=rs.getDouble(5);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return info;
+	}
+	
+	public List<Calorie>getDiaryCaloriesByUser(int id){
+		List<Calorie>calorielist=new ArrayList<Calorie>();
+		try{
+			Connection conn=ConnectionFactory.getConnection();
+			Statement s=conn.createStatement();
+			ResultSet rs=s.executeQuery("SELECT KALORIA,SZENHIDRAT,ZSIR,FEHERJE FROM NAPLO INNER JOIN KAJAK ON KAJA_ID=ID where felh_id="+id);
+			while(rs.next()){
+				Calorie calorie= new Calorie(rs.getDouble(1), rs.getDouble(2), rs.getDouble(3), rs.getDouble(4));
+				calorielist.add(calorie);
+				
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return calorielist;
+
+	}
+	
 	
 	public List<Food> getFoodlistByUser(int id){
 		List<Food> foodlist= new ArrayList<Food>();

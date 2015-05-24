@@ -1,11 +1,13 @@
 package hu.unideb.inf.prt.calorie.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 
 import hu.unideb.inf.prt.calorie.DAO.DAO;
 import hu.unideb.inf.prt.calorie.Model.Calorie;
+import hu.unideb.inf.prt.calorie.Model.Diet_diary;
 import hu.unideb.inf.prt.calorie.Model.Food;
 import hu.unideb.inf.prt.calorie.Model.Person;
 
@@ -51,6 +53,51 @@ public class Service {
 		return dao.getFoodlistByUser(id);
 	}
 	
+	public List<Diet_diary>getDietDiaryByUserId(){
+		DAO dao = new DAO();
+		return dao.getDiet_diarylist();
+	}
+	
+	public Map<DateTime,Double>getWeightMapById(int id){
+		DAO dao= new DAO();
+		return dao.getWeightByID(id);
+	}
+	
+	public double[] getAverageByUserId(int id){
+		DAO dao= new DAO();
+		return dao.getAverageByUser(id);
+	}
+	
+	public Calorie averageCalorie(List<Calorie>list){
+		int i=0;
+		Calorie calorie=new Calorie(0,0,0,0);
+		for (Calorie calorie2 : list) {
+			i++;
+			calorie.setKcal(calorie.getKcal()+calorie2.getKcal());
+			calorie.setCarbohydrate(calorie.getCarbohydrate()+calorie2.getCarbohydrate());
+			calorie.setFat(calorie.getFat()+calorie2.getFat());
+			calorie.setProtein(calorie.getProtein()+calorie2.getProtein());
+		}
+		if(i!=0){
+		calorie.setKcal(calorie.getKcal()/i);
+		calorie.setCarbohydrate(calorie.getCarbohydrate()/i);
+		calorie.setFat(calorie.getFat()/i);
+		calorie.setProtein(calorie.getProtein()/i);}
+		else{
+			calorie.setKcal(calorie.getKcal());
+			calorie.setCarbohydrate(calorie.getCarbohydrate());
+			calorie.setFat(calorie.getFat());
+			calorie.setProtein(calorie.getProtein());
+		}
+		return calorie;
+	}
+	
+	public Calorie getAverageCalorieByUser(int id){
+		DAO dao = new DAO();
+		List<Calorie>list=dao.getDiaryCaloriesByUser(id);
+		return averageCalorie(list);
+		
+	}
 	
 
 }

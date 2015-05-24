@@ -1,5 +1,7 @@
 package hu.unideb.inf.prt.calorie;
 
+import hu.unideb.inf.prt.calorie.Model.Calorie;
+import hu.unideb.inf.prt.calorie.Model.Diet_diary;
 import hu.unideb.inf.prt.calorie.Model.Food;
 import hu.unideb.inf.prt.calorie.Service.Service;
 
@@ -35,9 +37,17 @@ import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
+
 import javax.swing.ScrollPaneConstants;
+
+import org.joda.time.DateTime;
+
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class View {
 
@@ -71,8 +81,16 @@ public class View {
 	private JTextField txtWeight_1;
 	private JTextField txtGoal;
 	private JComboBox comboBox_1;
-	private JComboBox comboBox_2;
-
+	private JComboBox<Food> comboBox_2;
+	private JList<Diet_diary> list_1;
+	private JComboBox<DateTime> comboBox_3;
+	private Map<DateTime,Double>weightmap;
+	private JLabel lblWeight_1;
+	JLabel lblCalorieInPercent;
+	JLabel lblCarbohydrateInPercent;
+	JLabel lblProteinInPercent;
+	JLabel lblFatInPercent;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -366,6 +384,9 @@ public class View {
 		btnAddMeal.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Service service=new Service();
+				List<Food>tmp=service.getFoodListByUserId(1);
+				comboBox_2.setModel(new DefaultComboBoxModel<Food>(tmp.toArray(new Food[tmp.size()])));
 				ActivateLayer(5, layeredPane);
 			}
 		});
@@ -376,6 +397,20 @@ public class View {
 		btnStatistics.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Service service=new Service();
+				List<DateTime>tmp=new ArrayList<DateTime>();
+				weightmap=service.getWeightMapById(0);
+				for(DateTime date:weightmap.keySet()){
+					tmp.add(date);
+				}
+				
+				comboBox_3.setModel(new DefaultComboBoxModel<DateTime>(tmp.toArray(new DateTime[tmp.size()])));
+				lblWeight_1.setText(weightmap.get(comboBox_3.getSelectedItem()).toString());
+				Calorie tmp2=service.getAverageCalorieByUser(1);
+				lblCalorieInPercent.setText(tmp2.getKcal()+"");
+				lblCarbohydrateInPercent.setText(tmp2.getCarbohydrate()+"");
+				lblFatInPercent.setText(tmp2.getFat()+"");
+				lblProteinInPercent.setText(tmp2.getProtein()+"");
 				ActivateLayer(6, layeredPane);
 			}
 		});
@@ -400,6 +435,9 @@ public class View {
 		btnFoodLog.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				Service service=new Service();
+				List<Diet_diary>tmp=service.getDietDiaryByUserId();
+				list_1.setListData(tmp.toArray(new Diet_diary[tmp.size()]));
 				ActivateLayer(7, layeredPane);
 			}
 		});
@@ -417,7 +455,7 @@ public class View {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setAutoscrolls(true);
-		scrollPane.setBounds(0, 0, 434, 225);
+		scrollPane.setBounds(0, 0, 300, 260);
 		scrollPane.setWheelScrollingEnabled(true);
 		//scrollPane.setPreferredSize(preferredSize);
 		list = new JList<Food>();
@@ -563,19 +601,19 @@ public class View {
 		lblFat_1.setBounds(68, 168, 67, 14);
 		panel_6.add(lblFat_1);
 		
-		JLabel lblCalorieInPercent = new JLabel("Calorie in percent");
+		lblCalorieInPercent = new JLabel("Calorie in percent");
 		lblCalorieInPercent.setBounds(168, 93, 124, 14);
 		panel_6.add(lblCalorieInPercent);
 		
-		JLabel lblCarbohydrateInPercent = new JLabel("Carbohydrate in percent");
+		lblCarbohydrateInPercent = new JLabel("Carbohydrate in percent");
 		lblCarbohydrateInPercent.setBounds(168, 118, 149, 14);
 		panel_6.add(lblCarbohydrateInPercent);
 		
-		JLabel lblProteinInPercent = new JLabel("Protein in percent");
+		lblProteinInPercent = new JLabel("Protein in percent");
 		lblProteinInPercent.setBounds(168, 143, 124, 14);
 		panel_6.add(lblProteinInPercent);
 		
-		JLabel lblFatInPercent = new JLabel("Fat in percent");
+		lblFatInPercent = new JLabel("Fat in percent");
 		lblFatInPercent.setBounds(168, 168, 124, 14);
 		panel_6.add(lblFatInPercent);
 		
@@ -595,11 +633,15 @@ public class View {
 		lblWeightOnThe.setBounds(40, 23, 167, 14);
 		panel_6.add(lblWeightOnThe);
 		
-		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3 = new JComboBox();
+		comboBox_3.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				lblWeight_1.setText(weightmap.get(comboBox_3.getSelectedItem()).toString());			}
+		});
 		comboBox_3.setBounds(217, 20, 138, 20);
 		panel_6.add(comboBox_3);
 		
-		JLabel lblWeight_1 = new JLabel("Weight");
+		lblWeight_1 = new JLabel("Weight");
 		lblWeight_1.setBounds(365, 23, 46, 14);
 		panel_6.add(lblWeight_1);
 		
@@ -620,10 +662,25 @@ public class View {
 		layeredPane.add(panel_7);
 		panel_7.setLayout(null);
 		
-		JList list_1 = new JList();
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane2.setAutoscrolls(true);
+		scrollPane2.setBounds(0, 0, 440, 220);
+		scrollPane2.setWheelScrollingEnabled(true);
+		
+		list_1 = new JList<Diet_diary>();
 		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_1.setBounds(10, 11, 424, 217);
-		panel_7.add(list_1);
+		
+		list_1.setAutoscrolls(true);
+		list_1.setPreferredSize(null);
+		scrollPane2.add(list_1);
+		scrollPane2.setViewportView(list_1);
+		scrollPane2.setVisible(true);
+		//panel_3.add(scrollPane);
+		
+		panel_7.add(scrollPane2);
 		
 		JButton btnBack_2 = new JButton("Back");
 		btnBack_2.addMouseListener(new MouseAdapter() {
