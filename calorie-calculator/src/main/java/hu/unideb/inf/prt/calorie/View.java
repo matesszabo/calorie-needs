@@ -3,6 +3,8 @@ package hu.unideb.inf.prt.calorie;
 import hu.unideb.inf.prt.calorie.Model.Calorie;
 import hu.unideb.inf.prt.calorie.Model.Diet_diary;
 import hu.unideb.inf.prt.calorie.Model.Food;
+import hu.unideb.inf.prt.calorie.Model.Person;
+import hu.unideb.inf.prt.calorie.Model.Person_date;
 import hu.unideb.inf.prt.calorie.Service.Service;
 
 import java.awt.Component;
@@ -86,10 +88,25 @@ public class View {
 	private JComboBox<DateTime> comboBox_3;
 	private Map<DateTime,Double>weightmap;
 	private JLabel lblWeight_1;
-	JLabel lblCalorieInPercent;
-	JLabel lblCarbohydrateInPercent;
-	JLabel lblProteinInPercent;
-	JLabel lblFatInPercent;
+	private JLabel lblCalorieInPercent;
+	private JLabel lblCarbohydrateInPercent;
+	private JLabel lblProteinInPercent;
+	private JLabel lblFatInPercent;
+	private JLabel lblSinceTheRegistration;
+	private JComboBox comboBox;
+	private JProgressBar progressBar;
+	private JProgressBar progressBar_1;
+	private JProgressBar progressBar_2;
+	private JProgressBar progressBar_3;
+	private Person person;
+	private Calorie fulfilled;
+	private JLabel label;
+	private JLabel label_1;
+	private JLabel label_2;
+	private JLabel label_3;
+	private JLabel lblYourCurrentWeight;
+	private JTextField txtUnit;
+	private JLabel lblUnit ;
 	
 	/**
 	 * Launch the application.
@@ -130,6 +147,8 @@ public class View {
 	 */
 	private void initialize() {
 		
+		
+		
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 300);
@@ -149,8 +168,26 @@ public class View {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
 					Service service= new Service();
-					if(service.existsUser(txtUsername.getText(), txtPassword.getText()))
-					ActivateLayer(2, layeredPane);
+					Person tmp=service.existsUser(txtUsername.getText(), txtPassword.getText());
+					
+					if(tmp!=null){
+					person=tmp;
+					person.setBMI(service.calcBMI(person));
+					person.setBMR(service.calcBMR(person));
+					person.setNeeds(service.calcNeeds(person));
+					fulfilled=service.getFulfilledCalories(person.getId());
+					System.out.println(fulfilled.getFat());
+					System.out.println(person.getNeeds().getFat());
+					progressBar.setValue((int)(fulfilled.getKcal()/person.getNeeds().getKcal()*100));
+					progressBar_1.setValue((int)(fulfilled.getCarbohydrate()/person.getNeeds().getCarbohydrate()*100));
+					progressBar_3.setValue((int)(fulfilled.getFat()/person.getNeeds().getFat()*100));
+					progressBar_2.setValue((int)(fulfilled.getProtein()/person.getNeeds().getProtein()*100));
+					label.setText(fulfilled.getKcal()+"/"+(int)person.getNeeds().getKcal());
+					label_1.setText(fulfilled.getCarbohydrate()+"/"+(int)person.getNeeds().getCarbohydrate());
+					label_2.setText(fulfilled.getProtein()+"/"+(int)person.getNeeds().getProtein());
+					label_3.setText(fulfilled.getFat()+"/"+(int)person.getNeeds().getFat());
+					
+					ActivateLayer(2, layeredPane);}
 					else{
 						txtUsername.setText("Try again");
 						txtPassword.setText("Try again");
@@ -169,8 +206,24 @@ public class View {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
 					Service service= new Service();
-					if(service.existsUser(txtUsername.getText(), txtPassword.getText()))
-					ActivateLayer(2, layeredPane);
+					Person tmp=service.existsUser(txtUsername.getText(), txtPassword.getText());
+					if(tmp!=null){
+						person=tmp;
+						person.setBMI(service.calcBMI(person));
+						person.setBMR(service.calcBMR(person));
+						person.setNeeds(service.calcNeeds(person));
+						fulfilled=service.getFulfilledCalories(person.getId());
+						System.out.println(fulfilled.getFat());
+						System.out.println(person.getNeeds().getFat());
+						progressBar.setValue((int)(fulfilled.getKcal()/person.getNeeds().getKcal()*100));
+						progressBar_1.setValue((int)(fulfilled.getCarbohydrate()/person.getNeeds().getCarbohydrate()*100));
+						progressBar_3.setValue((int)(fulfilled.getFat()/person.getNeeds().getFat()*100));
+						progressBar_2.setValue((int)(fulfilled.getProtein()/person.getNeeds().getProtein()*100));
+						label.setText(fulfilled.getKcal()+"/"+(int)person.getNeeds().getKcal());
+						label_1.setText(fulfilled.getCarbohydrate()+"/"+(int)person.getNeeds().getCarbohydrate());
+						label_2.setText(fulfilled.getProtein()+"/"+(int)person.getNeeds().getProtein());
+						label_3.setText(fulfilled.getFat()+"/"+(int)person.getNeeds().getFat());
+					ActivateLayer(2, layeredPane);}
 					else{
 						txtUsername.setText("Try again");
 						txtPassword.setText("Try again");
@@ -196,8 +249,24 @@ public class View {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Service service= new Service();
-				if(service.existsUser(txtUsername.getText(), txtPassword.getText()))
-				ActivateLayer(2, layeredPane);
+				Person tmp=service.existsUser(txtUsername.getText(), txtPassword.getText());
+				if(tmp!=null){
+					person=tmp;
+					person.setBMI(service.calcBMI(person));
+					person.setBMR(service.calcBMR(person));
+					person.setNeeds(service.calcNeeds(person));
+					fulfilled=service.getFulfilledCalories(person.getId());
+					System.out.println(fulfilled.getFat());
+					System.out.println(person.getNeeds().getFat());
+					progressBar.setValue((int)(fulfilled.getKcal()/person.getNeeds().getKcal()*100));
+					progressBar_1.setValue((int)(fulfilled.getCarbohydrate()/person.getNeeds().getCarbohydrate()*100));
+					progressBar_3.setValue((int)(fulfilled.getFat()/person.getNeeds().getFat()*100));
+					progressBar_2.setValue((int)(fulfilled.getProtein()/person.getNeeds().getProtein()*100));
+					label.setText(fulfilled.getKcal()+"/"+(int)person.getNeeds().getKcal());
+					label_1.setText(fulfilled.getCarbohydrate()+"/"+(int)person.getNeeds().getCarbohydrate());
+					label_2.setText(fulfilled.getProtein()+"/"+(int)person.getNeeds().getProtein());
+					label_3.setText(fulfilled.getFat()+"/"+(int)person.getNeeds().getFat());
+				ActivateLayer(2, layeredPane);}
 				else{
 					txtUsername.setText("Try again");
 					txtPassword.setText("Try again");
@@ -334,35 +403,35 @@ public class View {
 		lblFat.setBounds(10, 176, 46, 14);
 		panel_2.add(lblFat);
 		
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		progressBar.setBounds(110, 86, 190, 14);
 		panel_2.add(progressBar);
 		
-		JProgressBar progressBar_1 = new JProgressBar();
+		progressBar_1 = new JProgressBar();
 		progressBar_1.setBounds(110, 116, 190, 14);
 		panel_2.add(progressBar_1);
 		
-		JProgressBar progressBar_2 = new JProgressBar();
+		progressBar_2 = new JProgressBar();
 		progressBar_2.setBounds(110, 146, 190, 14);
 		panel_2.add(progressBar_2);
 		
-		JProgressBar progressBar_3 = new JProgressBar();
+		progressBar_3 = new JProgressBar();
 		progressBar_3.setBounds(110, 176, 190, 14);
 		panel_2.add(progressBar_3);
 		
-		JLabel label = new JLabel("0/0");
+		label = new JLabel("0/0");
 		label.setBounds(320, 86, 104, 14);
 		panel_2.add(label);
 		
-		JLabel label_1 = new JLabel("0/0");
+		label_1=new JLabel("0/0");
 		label_1.setBounds(320, 116, 104, 14);
 		panel_2.add(label_1);
 		
-		JLabel label_2 = new JLabel("0/0");
+		label_2 = new JLabel("0/0");
 		label_2.setBounds(320, 146, 104, 14);
 		panel_2.add(label_2);
 		
-		JLabel label_3 = new JLabel("0/0");
+		label_3 = new JLabel("0/0");
 		label_3.setBounds(320, 176, 104, 14);
 		panel_2.add(label_3);
 		
@@ -374,6 +443,27 @@ public class View {
 		btnChangeData.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Service service = new Service();
+				Person_date pd=service.getCurrentInfoByUser(person.getId());
+				txtWeight_1.setText(pd.getWeight()+"");
+				txtGoal.setText(pd.getGoal()+"");
+				switch (pd.getExcercise()) {
+				case 1:
+					comboBox.setSelectedIndex(0);
+					break;
+				case 2:
+					comboBox.setSelectedIndex(1);
+					break;
+				case 3:
+					comboBox.setSelectedIndex(2);
+					break;
+				case 4:
+					comboBox.setSelectedIndex(3);
+					break;
+				case 5:
+					comboBox.setSelectedIndex(4);
+					break;
+				}
 				ActivateLayer(4, layeredPane);
 			}
 		});
@@ -385,7 +475,7 @@ public class View {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Service service=new Service();
-				List<Food>tmp=service.getFoodListByUserId(1);
+				List<Food>tmp=service.getFoodListByUserId(person.getId());
 				comboBox_2.setModel(new DefaultComboBoxModel<Food>(tmp.toArray(new Food[tmp.size()])));
 				ActivateLayer(5, layeredPane);
 			}
@@ -399,18 +489,19 @@ public class View {
 			public void mouseClicked(MouseEvent e) {
 				Service service=new Service();
 				List<DateTime>tmp=new ArrayList<DateTime>();
-				weightmap=service.getWeightMapById(0);
+				weightmap=service.getWeightMapById(person.getId());
 				for(DateTime date:weightmap.keySet()){
 					tmp.add(date);
 				}
 				
 				comboBox_3.setModel(new DefaultComboBoxModel<DateTime>(tmp.toArray(new DateTime[tmp.size()])));
 				lblWeight_1.setText(weightmap.get(comboBox_3.getSelectedItem()).toString());
-				Calorie tmp2=service.getAverageCalorieByUser(1);
+				Calorie tmp2=service.getAverageCalorieByUser(person.getId());
 				lblCalorieInPercent.setText(tmp2.getKcal()+"");
 				lblCarbohydrateInPercent.setText(tmp2.getCarbohydrate()+"");
 				lblFatInPercent.setText(tmp2.getFat()+"");
 				lblProteinInPercent.setText(tmp2.getProtein()+"");
+				lblSinceTheRegistration.setText(service.getAverageWeightByUser(person.getId())+"");
 				ActivateLayer(6, layeredPane);
 			}
 		});
@@ -422,7 +513,7 @@ public class View {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Service service=new Service();
-				List<Food>tmp=service.getFoodListByUserId(1);
+				List<Food>tmp=service.getFoodListByUserId(person.getId());
 				System.out.println(tmp.size());
 				list.setListData(tmp.toArray(new Food[tmp.size()]));
 				ActivateLayer(3, layeredPane);
@@ -507,7 +598,7 @@ public class View {
 		panel_4.add(txtGoal);
 		txtGoal.setColumns(10);
 		
-		JLabel lblYourCurrentWeight = new JLabel("Your current weight");
+		lblYourCurrentWeight = new JLabel("Your current weight");
 		lblYourCurrentWeight.setBounds(10, 65, 150, 14);
 		panel_4.add(lblYourCurrentWeight);
 		
@@ -519,7 +610,7 @@ public class View {
 		lblYourExcerciseLevel.setBounds(10, 120, 150, 14);
 		panel_4.add(lblYourExcerciseLevel);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Little to no excercise", "Light excercise(1-3 days per week)", "Moderate excercise(3-5 days per week)", "Heavy excercise(6-7 days per week)", "Very heavy excercise(twice per day, extra heavy workouts)"}));
 		comboBox.setBounds(180, 114, 225, 20);
 		panel_4.add(comboBox);
@@ -528,6 +619,20 @@ public class View {
 		btnOkay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Service service=new Service();
+				person.setDaily(new Person_date(DateTime.now(), Double.parseDouble(txtWeight_1.getText()), comboBox.getSelectedIndex()+1, Double.parseDouble(txtGoal.getText())));
+				service.insertUserDiary(person);
+				person.setBMI(service.calcBMI(person));
+				person.setBMR(service.calcBMR(person));
+				person.setNeeds(service.calcNeeds(person));
+				progressBar.setValue((int)(fulfilled.getKcal()/person.getNeeds().getKcal()*100));
+				progressBar_1.setValue((int)(fulfilled.getCarbohydrate()/person.getNeeds().getCarbohydrate()*100));
+				progressBar_3.setValue((int)(fulfilled.getFat()/person.getNeeds().getFat()*100));
+				progressBar_2.setValue((int)(fulfilled.getProtein()/person.getNeeds().getProtein()*100));
+				label.setText(fulfilled.getKcal()+"/"+(int)person.getNeeds().getKcal());
+				label_1.setText(fulfilled.getCarbohydrate()+"/"+(int)person.getNeeds().getCarbohydrate());
+				label_2.setText(fulfilled.getProtein()+"/"+(int)person.getNeeds().getProtein());
+				label_3.setText(fulfilled.getFat()+"/"+(int)person.getNeeds().getFat());
 				ActivateLayer(2, layeredPane);
 			}
 		});
@@ -557,10 +662,33 @@ public class View {
 		panel_5.add(comboBox_1);
 		
 		comboBox_2 = new JComboBox();
+		comboBox_2.addItemListener(new ItemListener() {
+			 public void itemStateChanged(ItemEvent arg0) {
+				 lblUnit.setText(((Food)comboBox_2.getSelectedItem()).getUnit());
+			}
+		});
 		comboBox_2.setBounds(159, 93, 265, 50);
 		panel_5.add(comboBox_2);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Service service=new Service();
+				
+				fulfilled=new Calorie(fulfilled.getKcal()+((Food)comboBox_2.getSelectedItem()).getCalorie().getKcal(), fulfilled.getCarbohydrate()+((Food)comboBox_2.getSelectedItem()).getCalorie().getCarbohydrate(), fulfilled.getFat()+((Food)comboBox_2.getSelectedItem()).getCalorie().getFat(), fulfilled.getProtein()+((Food)comboBox_2.getSelectedItem()).getCalorie().getProtein());
+				service.insertDietDiary(new Diet_diary(person.getId(), ((Food)comboBox_2.getSelectedItem()).getId(), DateTime.now(), Double.parseDouble(txtUnit.getText()), lblUnit.getText(), (String)comboBox_1.getSelectedItem(), new Calorie(person.getNeeds().getKcal(), person.getNeeds().getCarbohydrate(), person.getNeeds().getFat(), person.getNeeds().getProtein()), new Calorie(fulfilled.getKcal(),fulfilled.getCarbohydrate(),fulfilled.getFat(),fulfilled.getProtein())));
+				progressBar.setValue((int)(fulfilled.getKcal()/person.getNeeds().getKcal()*100));
+				progressBar_1.setValue((int)(fulfilled.getCarbohydrate()/person.getNeeds().getCarbohydrate()*100));
+				progressBar_3.setValue((int)(fulfilled.getFat()/person.getNeeds().getFat()*100));
+				progressBar_2.setValue((int)(fulfilled.getProtein()/person.getNeeds().getProtein()*100));
+				label.setText(fulfilled.getKcal()+"/"+(int)person.getNeeds().getKcal());
+				label_1.setText(fulfilled.getCarbohydrate()+"/"+(int)person.getNeeds().getCarbohydrate());
+				label_2.setText(fulfilled.getProtein()+"/"+(int)person.getNeeds().getProtein());
+				label_3.setText(fulfilled.getFat()+"/"+(int)person.getNeeds().getFat());
+				ActivateLayer(2, layeredPane);
+			}
+		});
 		btnAdd.setBounds(182, 203, 89, 23);
 		panel_5.add(btnAdd);
 		
@@ -573,6 +701,16 @@ public class View {
 		});
 		btnCancel_1.setBounds(308, 203, 89, 23);
 		panel_5.add(btnCancel_1);
+		
+		txtUnit = new JTextField();
+		txtUnit.setText("0");
+		txtUnit.setBounds(182, 154, 86, 20);
+		panel_5.add(txtUnit);
+		txtUnit.setColumns(10);
+		
+		lblUnit = new JLabel("Unit");
+		lblUnit.setBounds(308, 154, 46, 20);
+		panel_5.add(lblUnit);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setVisible(false);
@@ -617,7 +755,7 @@ public class View {
 		lblFatInPercent.setBounds(168, 168, 124, 14);
 		panel_6.add(lblFatInPercent);
 		
-		JLabel lblPercentOfFoods = new JLabel("Percent of foods");
+		JLabel lblPercentOfFoods = new JLabel("Average per food");
 		lblPercentOfFoods.setBounds(168, 68, 124, 14);
 		panel_6.add(lblPercentOfFoods);
 		
@@ -625,7 +763,7 @@ public class View {
 		lblAverageWeight.setBounds(40, 214, 95, 14);
 		panel_6.add(lblAverageWeight);
 		
-		JLabel lblSinceTheRegistration = new JLabel("Since the registration");
+		lblSinceTheRegistration = new JLabel("Since the registration");
 		lblSinceTheRegistration.setBounds(145, 214, 124, 14);
 		panel_6.add(lblSinceTheRegistration);
 		

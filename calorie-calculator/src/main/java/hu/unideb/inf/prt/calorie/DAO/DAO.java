@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class DAO {
 	public List<Food> getFoodlist(){
@@ -89,6 +91,46 @@ public class DAO {
 
 	}
 	
+	public List<Calorie>getDiaryCaloriesByUserToday(int id){
+		List<Calorie>calorielist=new ArrayList<Calorie>();
+		DateTime dt = DateTime.now();
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MMM-YY");
+		String str = fmt.print(dt);
+		str="'"+str+"'";
+		try{
+			Connection conn=ConnectionFactory.getConnection();
+			Statement s=conn.createStatement();
+			ResultSet rs=s.executeQuery("SELECT DATUM,KALORIA,SZENHIDRAT,ZSIR,FEHERJE,NAPLO.MENNYISEG,KAJAK.MENNYISEG FROM NAPLO INNER JOIN KAJAK ON KAJA_ID=ID where felh_id="+id+" and DATUM="+str);
+			while(rs.next()){
+				double oszto=rs.getDouble(6)/rs.getDouble(7);
+				Calorie calorie= new Calorie(rs.getDouble(2)*oszto, rs.getDouble(3)*oszto, rs.getDouble(4)*oszto, rs.getDouble(5)*oszto);
+				calorielist.add(calorie);
+				
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return calorielist;
+
+	}
+
+	//public Person getUser(String uname,)
+	
+	public List<Double>getWeightsByUser(int id){
+		List<Double>weights=new ArrayList<Double>();
+		try{
+			Connection conn= ConnectionFactory.getConnection();
+			Statement s=conn.createStatement();
+			ResultSet rs=s.executeQuery("select TESTSULY from FELHASZNALO_NAPLO WHERE FELH_ID="+id);
+			while(rs.next()){
+				weights.add(rs.getDouble(1));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return weights;
+	}
 	
 	public List<Food> getFoodlistByUser(int id){
 		List<Food> foodlist= new ArrayList<Food>();
@@ -165,22 +207,21 @@ public class DAO {
 		return date;
 	}
 	
-	public int getUserId(String uname, String passw){
-		int UID=-1;
+	public Person getUserId(String uname, String passw){
+		Person person=null;
 		uname="'"+uname+"'";
 		passw="'"+passw+"'";
 		try{
 		Connection conn= ConnectionFactory.getConnection();
 		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("SELECT ID FROM FELHASZNALO_P WHERE FELHNEV="+uname+" AND JELSZO="+passw);
+		ResultSet rs = s.executeQuery("SELECT * FROM FELHASZNALO_P INNER JOIN FELHASZNALO_NAPLO ON ID=FELH_ID WHERE FELHNEV="+uname+" AND JELSZO="+passw+" ORDER BY DATUM DESC");
 		while(rs.next())
 		{
-			UID=rs.getInt(1);
-		}
+			person=new Person(rs.getInt(1), rs.getInt(4), new DateTime(rs.getDate(5)), new Person_date(new DateTime(rs.getDate(8)), rs.getDouble(9), rs.getInt(10), rs.getDouble(11)), rs.getString(6), rs.getString(2), rs.getString(3));	break;	}
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-		return UID;
+		return person;
 	}
 	
 	public int getUserIdByUname(String uname){
@@ -276,7 +317,7 @@ public class DAO {
 	public void insertUser_Diary(Person person){
 		try{
 			Connection conn= ConnectionFactory.getConnection();
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO FELHASZNALO_NAPLO (ID,DATUM,TESTSULY,MOZGAS,CEL) VALUES(?,?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO FELHASZNALO_NAPLO (FELH_ID,DATUM,TESTSULY,MOZGAS,CEL) VALUES(?,?,?,?,?)");
 			ps.setInt(1, person.getId());
 			ps.setDate(2, new Date(person.getDaily().getDate().getMillis()));
 			ps.setDouble(3, person.getDaily().getWeight());
