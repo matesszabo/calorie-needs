@@ -47,7 +47,7 @@ public class Main {
 			System.out.println(ppl);
 		}
 		
-		List<Diet_diary> diarylist= dao.getDiet_diarylist();
+		List<Diet_diary> diarylist= dao.getDiet_diarylist(1);
 		for (Diet_diary diet_diary : diarylist) {
 			System.out.println(diet_diary);
 		}

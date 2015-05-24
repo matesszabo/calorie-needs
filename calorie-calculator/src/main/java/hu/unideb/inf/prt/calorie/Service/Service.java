@@ -32,32 +32,33 @@ public class Service {
 	
 	public Calorie calcNeeds(Person person){
 		Calorie calorie=null;
+		double modifier=person.getDaily().getGoal()/0.5*500;
 		if(person.getDaily().getExcercise()==1){
-			calorie= new Calorie(person.getBMR()*1.2);
+			calorie= new Calorie(person.getBMR()*1.2+modifier);
 			calorie.setCarbohydrate(calorie.getKcal()*0.55);
 			calorie.setProtein(calorie.getKcal()*0.15);
 			calorie.setFat(calorie.getKcal()*0.3);		
 		}
 		if(person.getDaily().getExcercise()==2){
-			calorie= new Calorie(person.getBMR()*1.375);
+			calorie= new Calorie(person.getBMR()*1.375+modifier);
 			calorie.setCarbohydrate(calorie.getKcal()*0.55);
 			calorie.setProtein(calorie.getKcal()*0.15);
 			calorie.setFat(calorie.getKcal()*0.3);		
 		}
 		if(person.getDaily().getExcercise()==3){
-			calorie= new Calorie(person.getBMR()*1.55);
+			calorie= new Calorie(person.getBMR()*1.55+modifier);
 			calorie.setCarbohydrate(calorie.getKcal()*0.55);
 			calorie.setProtein(calorie.getKcal()*0.15);
 			calorie.setFat(calorie.getKcal()*0.3);		
 		}
 		if(person.getDaily().getExcercise()==4){
-			calorie= new Calorie(person.getBMR()*1.725);
+			calorie= new Calorie(person.getBMR()*1.725+modifier);
 			calorie.setCarbohydrate(calorie.getKcal()*0.55);
 			calorie.setProtein(calorie.getKcal()*0.15);
 			calorie.setFat(calorie.getKcal()*0.3);		
 		}
 		if(person.getDaily().getExcercise()==5){
-			calorie= new Calorie(person.getBMR()*1.9);
+			calorie= new Calorie(person.getBMR()*1.9+modifier);
 			calorie.setCarbohydrate(calorie.getKcal()*0.55);
 			calorie.setProtein(calorie.getKcal()*0.15);
 			calorie.setFat(calorie.getKcal()*0.3);		
@@ -81,9 +82,9 @@ public class Service {
 		return dao.getFoodlistByUser(id);
 	}
 	
-	public List<Diet_diary>getDietDiaryByUserId(){
+	public List<Diet_diary>getDietDiaryByUserId(int id){
 		DAO dao = new DAO();
-		return dao.getDiet_diarylist();
+		return dao.getDiet_diarylist(id);
 	}
 	
 	public Map<DateTime,Double>getWeightMapById(int id){
@@ -159,6 +160,27 @@ public class Service {
 		return calorie;
 	}
 	
+	public String calcHealthStatus(Person person){
+		if(person.getBMI()<15)
+			return "Very severely underweight";
+		if(person.getBMI()>=15 && person.getBMI()<16)
+			return "Severely underweight";
+		if(person.getBMI()>=16 && person.getBMI()<18.5)
+			return "Underweight";
+		if(person.getBMI()>=18.5 && person.getBMI()<25)
+			return "Normal (healthy weight)";
+		if(person.getBMI()>=25 && person.getBMI()<30)
+			return "Overweight";
+		if(person.getBMI()>=30 && person.getBMI()<35)
+			return "Obese Class I (Moderately obese)";
+		if(person.getBMI()>=35 && person.getBMI()<40)
+			return "Obese Class II (Severely obese)";
+		if(person.getBMI()>=40)
+			return "Obese Class III (Very severely obese)";
+		return "";
+		
+	}
+	
 	public Calorie getFulfilledCalories(int id){
 		DAO dao=new DAO();
 		return calcFulfilledCalories(dao.getDiaryCaloriesByUserToday(id));
@@ -173,6 +195,22 @@ public class Service {
 	public void insertDietDiary(Diet_diary dd){
 		DAO dao=new DAO();
 		dao.insertDiary(dd);
+	}
+	
+	public void insertFood(Food food){
+		DAO dao= new DAO();
+		dao.insertFood(food);
+	}
+	
+	public int getMaxFoodId(){
+		DAO dao=new DAO();
+		return dao.maxFoodId();
+	}
+	
+	public void deleteFood(Food food,Person person){
+		if(food.getUserId()==person.getId()){
+		DAO dao= new DAO();
+		dao.deleteFood(food);}
 	}
 	
 

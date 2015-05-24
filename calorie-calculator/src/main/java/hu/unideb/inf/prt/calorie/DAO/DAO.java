@@ -174,12 +174,12 @@ public class DAO {
 		
 	}
 	
-	public List<Diet_diary> getDiet_diarylist(){
+	public List<Diet_diary> getDiet_diarylist(int id){
 		List<Diet_diary> dietlist= new ArrayList<Diet_diary>();
 		try{
 		Connection conn= ConnectionFactory.getConnection();
 		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM NAPLO");
+		ResultSet rs = s.executeQuery("SELECT * FROM NAPLO WHERE FELH_ID="+id);
 		while(rs.next())
 		{
 			Diet_diary diary= new Diet_diary(rs.getInt(1),rs.getInt(2),new DateTime(rs.getDate(3)) ,rs.getInt(4),rs.getString(5),rs.getString(6),new Calorie(rs.getInt(7),rs.getInt(8),rs.getInt(9),rs.getInt(10)),new Calorie(rs.getInt(11),rs.getInt(12),rs.getInt(13),rs.getInt(14)));
@@ -239,6 +239,20 @@ public class DAO {
 			e.printStackTrace();
 		}
 		return UID;
+	}
+	public int maxFoodId(){
+		int id=Integer.MAX_VALUE;
+		try{
+			Connection conn=ConnectionFactory.getConnection();
+			Statement s= conn.createStatement();
+			ResultSet rs=s.executeQuery("select max(id) from kajak ");
+			while(rs.next()){
+				id=rs.getInt(1);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return id;
 	}
 	
 	public Person_date getLatestPersonInfoById(int id){
@@ -353,6 +367,18 @@ public class DAO {
 			}catch(SQLException e){
 				e.printStackTrace();
 			}
+	}
+	
+	public void deleteFood(Food food){
+		try{
+			Connection conn=ConnectionFactory.getConnection();
+			PreparedStatement ps=conn.prepareStatement("DELETE FROM KAJAK WHERE ID="+food.getId());
+			ps.executeQuery();
+			
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void updateFood(Food food){
