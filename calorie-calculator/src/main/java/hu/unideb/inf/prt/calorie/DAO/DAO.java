@@ -23,7 +23,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
- * A class with database methods
+ * A class with database methods.
  * @author mates
  *
  */
@@ -31,8 +31,8 @@ public class DAO {
 	private static Logger logger = LoggerFactory.getLogger(DAO.class);
 
 	/**
-	 * A method for getting the list of foods
-	 * Returns list of food from database
+	 * A method for getting the list of foods.
+	 * Returns list of food from database.
 	 * @return list of food from database
 	 */
 	public List<Food> getFoodlist(){
@@ -54,8 +54,8 @@ public class DAO {
 		return foodlist;
 	}
 	/**
-	 * A method for getting map with DateTime key and Double value
-	 * Returns a map with the user's weight history
+	 * A method for getting map with DateTime key and Double value.
+	 * Returns a map with the user's weight history.
 	 * @param id of the user
 	 * @return a map with the user's weight history
 	 */
@@ -76,8 +76,8 @@ public class DAO {
 		return weightMap;
 	}
 	/**
-	 * Deprecated method for getting average calories by user is
-	 * Returns the average calories, carbohydrate, fat, protein
+	 * Deprecated method for getting average calories by user is.
+	 * Returns the average calories, carbohydrate, fat, protein.
 	 * @param id of the user
 	 * @return the average calories, carbohydrate, fat, protein
 	 */
@@ -100,8 +100,8 @@ public class DAO {
 		return info;
 	}
 	/**
-	 * A method for getting the foods' information what the user ate
-	 * Returns a list of Calorie object
+	 * A method for getting the foods' information what the user ate.
+	 * Returns a list of Calorie object.
 	 * @param id of the user
 	 * @return a list of Calorie objects
 	 */
@@ -126,8 +126,8 @@ public class DAO {
 
 	}
 	/**
-	 * A method for getting information about user's meal history for today
-	 * Returns a list of Calorie objects
+	 * A method for getting information about user's meal history for today.
+	 * Returns a list of Calorie objects.
 	 * @param id of the user
 	 * @return a list of Calorie objects
 	 */
@@ -158,8 +158,8 @@ public class DAO {
 	}
 
 	/**
-	 * A method for getting a user's weight history
-	 * Returns a list of Doubles
+	 * A method for getting a user's weight history.
+	 * Returns a list of Doubles.
 	 * @param id of the user
 	 * @return a list of Doubles
 	 */

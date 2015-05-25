@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A class for registering driver and creating a connection
+ * A class for registering driver and creating a connection.
  * @author matesszabo
  *
  */
@@ -21,7 +21,7 @@ public class ConnectionFactory {
 	static final String USERNAME="";
 	static final String PASSWORD="";
 	/**
-	 * Constructor of ConnectionFactory
+	 * Constructor of ConnectionFactory.
 	 */
 	private ConnectionFactory(){
 		try{
@@ -36,8 +36,8 @@ public class ConnectionFactory {
 	}
 	
 	/**
-	 * A method to create a connection
-	 * Returns a connection
+	 * A method to create a connection.
+	 * Returns a connection.
 	 * @return connection from DriverManager
 	 */
 	private Connection createConnection(){
@@ -55,7 +55,7 @@ public class ConnectionFactory {
 	
 	/**
 	 * A method to get connection.
-	 * Returns a connection from ConnectionFactory
+	 * Returns a connection from ConnectionFactory.
 	 * @return a connection from ConnectionFactory
 	 */
 	public static Connection getConnection(){
