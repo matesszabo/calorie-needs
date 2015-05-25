@@ -122,6 +122,11 @@ public class View {
 	/**
 	 * Launch the application.
 	 */
+	/**
+	 * Activating layer with i parameter.
+	 * @param i layer number
+	 * @param layeredPane the layered panel
+	 */
 	public static void ActivateLayer(int i, JLayeredPane layeredPane){
 		
 		for(Component component: layeredPane.getComponents()){

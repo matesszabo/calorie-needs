@@ -44,8 +44,8 @@ public class Diet_diary {
 	 * @param quantity of the food
 	 * @param unit of the quantity
 	 * @param meal type
-	 * @param calorie needs of user
-	 * @param fulfilled needs of user
+	 * @param needs of user
+	 * @param remaining is fulfilled needs of user
 	 */
 	public Diet_diary(int userId, int foodId, DateTime date, double quantity,
 			String unit, String meal, Calorie needs, Calorie remaining) {
@@ -180,7 +180,7 @@ public class Diet_diary {
 	}
 	/**
 	 * A method for setting fulfilled calories.
-	 * @param fulfilled calories that needs to be set
+	 * @param remaining is the fulfilled calories that needs to be set
 	 */
 	public void setRemaining(Calorie remaining) {
 		this.remaining = remaining;

@@ -41,7 +41,7 @@ public class Person_date {
 	/**
 	 * A method for getting new weight.
 	 * Returns new weight.
-	 * @return new weight
+	 * @return weight as new weight
 	 */
 	public double getWeight() {
 		return weight;
@@ -49,7 +49,7 @@ public class Person_date {
 	/**
 	 * A method for setting the new weight.
 	 * Returns new weight.
-	 * @param new weight
+	 * @param weight as new weight
 	 */
 	public void setWeight(double weight) {
 		this.weight = weight;

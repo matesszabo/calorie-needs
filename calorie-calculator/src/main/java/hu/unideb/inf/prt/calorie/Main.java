@@ -13,15 +13,15 @@ import hu.unideb.inf.prt.calorie.Model.Food;
 import hu.unideb.inf.prt.calorie.Model.Person;
 
 /**
- * A simple main class to test dao. Unused
+ * A simple main class to test dao. Unused.
  * @author matesszabo
  *
  */
 public class Main {
 
 	/**
-	 * The old main method. Unused
-	 * @param args
+	 * The old main method. Unused.
+	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

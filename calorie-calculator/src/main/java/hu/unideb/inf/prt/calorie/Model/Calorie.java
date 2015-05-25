@@ -67,7 +67,7 @@ public class Calorie {
 	private double fat;
 	/**
 	 * Constructor for a person.
-	 * @param calorie needs in kcal
+	 * @param kcal calorie needs in this unit
 	 */
 	public Calorie(double kcal) {
 		super();
