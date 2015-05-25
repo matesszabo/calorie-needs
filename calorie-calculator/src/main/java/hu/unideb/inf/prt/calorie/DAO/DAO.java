@@ -22,11 +22,19 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * A class with database methods
+ * @author mates
+ *
+ */
 public class DAO {
 	private static Logger logger = LoggerFactory.getLogger(DAO.class);
 
-	
+	/**
+	 * A method for getting the list of foods
+	 * Returns list of food from database
+	 * @return list of food from database
+	 */
 	public List<Food> getFoodlist(){
 		List<Food> foodlist= new ArrayList<Food>();
 		try{
@@ -45,6 +53,12 @@ public class DAO {
 		logger.debug("got foodlist");
 		return foodlist;
 	}
+	/**
+	 * A method for getting map with DateTime key and Double value
+	 * Returns a map with the user's weight history
+	 * @param id of the user
+	 * @return a map with the user's weight history
+	 */
 	public Map<DateTime, Double>getWeightByID(int id){
 		Map<DateTime,Double>weightMap=new HashMap<DateTime, Double>();
 		try{
@@ -61,7 +75,12 @@ public class DAO {
 		logger.debug("got weightmap");
 		return weightMap;
 	}
-	
+	/**
+	 * Deprecated method for getting average calories by user is
+	 * Returns the average calories, carbohydrate, fat, protein
+	 * @param id of the user
+	 * @return the average calories, carbohydrate, fat, protein
+	 */
 	public double[] getAverageByUser(int id){
 		logger.warn("deprecated");
 		double[] info= new double[4];
@@ -80,7 +99,12 @@ public class DAO {
 		}
 		return info;
 	}
-	
+	/**
+	 * A method for getting the foods' information what the user ate
+	 * Returns a list of Calorie object
+	 * @param id of the user
+	 * @return a list of Calorie objects
+	 */
 	public List<Calorie>getDiaryCaloriesByUser(int id){
 		List<Calorie>calorielist=new ArrayList<Calorie>();
 		try{
@@ -101,7 +125,12 @@ public class DAO {
 		return calorielist;
 
 	}
-	
+	/**
+	 * A method for getting information about user's meal history for today
+	 * Returns a list of Calorie objects
+	 * @param id of the user
+	 * @return a list of Calorie objects
+	 */
 	public List<Calorie>getDiaryCaloriesByUserToday(int id){
 		List<Calorie>calorielist=new ArrayList<Calorie>();
 		DateTime dt = DateTime.now();
@@ -128,7 +157,12 @@ public class DAO {
 
 	}
 
-	
+	/**
+	 * A method for getting a user's weight history
+	 * Returns a list of Doubles
+	 * @param id of the user
+	 * @return a list of Doubles
+	 */
 	public List<Double>getWeightsByUser(int id){
 		List<Double>weights=new ArrayList<Double>();
 		try{
@@ -145,7 +179,12 @@ public class DAO {
 		logger.debug("got weight list");
 		return weights;
 	}
-	
+	/**
+	 * A method for getting food list by user id.
+	 * Returns a list of food what was added by the user or by the admin.
+	 * @param id of the user
+	 * @return a list of food
+	 */
 	public List<Food> getFoodlistByUser(int id){
 		List<Food> foodlist= new ArrayList<Food>();
 		try{
@@ -164,7 +203,11 @@ public class DAO {
 		logger.debug("got food list");
 		return foodlist;
 	}
-	
+	/**
+	 * Deprecated method for getting the people.
+	 * Returns a list of Person objects.
+	 * @return a list of Person objects
+	 */
 	public List<Person> getPersonlist(){
 		logger.warn("deprecated, personlist");
 		List<Person> personlist= new ArrayList<Person>();
@@ -186,6 +229,11 @@ public class DAO {
 		}
 		return personlist;
 	}
+	/**
+	 * Unused method.
+	 * Returns null.
+	 * @return null
+	 */
 	public List<Person> getPersonListWithAdditional(){
 		return null;
 		
@@ -209,7 +257,12 @@ public class DAO {
 		logger.debug("got diet list");
 		return dietlist;
 	}
-	
+	/**
+	 * A method for getting the last date of changeable user information.
+	 * Returns a date when the information changed.
+	 * @param id of the user
+	 * @return a date when the information changed
+	 */
 	public DateTime getDateByUserId(int id){
 		DateTime date=null;
 		try{
@@ -227,7 +280,13 @@ public class DAO {
 		logger.debug("got date");
 		return date;
 	}
-	
+	/**
+	 * A method for getting information about a person.
+	 * Returns a Person object.
+	 * @param uname of the user
+	 * @param passw of the user
+	 * @return a Person object
+	 */
 	public Person getUserId(String uname, String passw){
 		Person person=null;
 		uname="'"+uname+"'";
@@ -246,7 +305,12 @@ public class DAO {
 		logger.debug("got person");
 		return person;
 	}
-	
+	/**
+	 * A method for getting user id by username.
+	 * Returns an int represents the user id
+	 * @param uname of the user
+	 * @return an int represents the user id
+	 */
 	public int getUserIdByUname(String uname){
 		logger.warn("deprecated");
 		int UID=-1;
@@ -264,6 +328,11 @@ public class DAO {
 		}
 		return UID;
 	}
+	/**
+	 * A method for getting the maximum food id.
+	 * Returns the maximum food id.
+	 * @return the maximum food id.
+	 */
 	public int maxFoodId(){
 		int id=Integer.MAX_VALUE;
 		try{
@@ -280,7 +349,11 @@ public class DAO {
 		logger.debug("got food id");
 		return id;
 	}
-	
+	/**
+	 * A method for getting the maximum person id.
+	 * Returns the maximum person id.
+	 * @return the maximum person id.
+	 */
 	public int maxPersonId(){
 		int id=Integer.MAX_VALUE;
 		try{
@@ -297,7 +370,12 @@ public class DAO {
 		logger.debug("got max person id");
 		return id;
 	}
-	
+	/**
+	 * A method for getting the latest person info.
+	 * Returns a Person_date object.
+	 * @param id of the user
+	 * @return a Person_date object
+	 */
 	public Person_date getLatestPersonInfoById(int id){
 		Person_date person=null;
 		try{
@@ -315,7 +393,10 @@ public class DAO {
 		logger.debug("got latest person info");
 		return person;
 	}
-	
+	/**
+	 * A method for inserting new food.
+	 * @param food object that needs inserting.
+	 */
 	public void insertFood(Food food){
 		try{
 			Connection conn= ConnectionFactory.getConnection();
@@ -338,7 +419,10 @@ public class DAO {
 			}
 		logger.debug("food inserted");
 	}
-		
+	/**
+	 * A method for inserting user.	
+	 * @param person that needs to be inserted
+	 */
 	public void insertUser(Person person){
 		logger.warn("deprecated");
 		try{
@@ -351,7 +435,7 @@ public class DAO {
 			ps.setDouble(5, 1);
 			ps.setDouble(6, 1);
 			ps.setDouble(7, 1);
-			ps.setString(8, "férfi");
+			ps.setString(8, "Male");
 			ps.setDouble(9, 1);
 			ps.executeUpdate();
 			
@@ -361,7 +445,10 @@ public class DAO {
 			}
 		logger.debug("user inserted");
 	}
-	
+	/**
+	 * A method for inserting new user.
+	 * @param person that needs to be inserted
+	 */
 	public void insertUser_P(Person person){
 		try{
 			Connection conn= ConnectionFactory.getConnection();
@@ -381,7 +468,10 @@ public class DAO {
 			}
 		logger.debug("user inserted");
 	}
-	
+	/**
+	 * A method for inserting recent information about a user.
+	 * @param person object with more recent information
+	 */
 	public void insertUser_Diary(Person person){
 		try{
 			Connection conn= ConnectionFactory.getConnection();
@@ -400,7 +490,10 @@ public class DAO {
 			}
 		logger.debug("inserted into diary");
 	}
-	
+	/**
+	 * A method for inserting into diary.
+	 * @param diary that needs to be inserted
+	 */
 	public void insertDiary(Diet_diary diary){
 		try{
 			Connection conn= ConnectionFactory.getConnection();
@@ -428,7 +521,10 @@ public class DAO {
 			}
 		logger.debug("inserted into diet_diary");
 	}
-	
+	/**
+	 * A method for removing unwanted foods from the database.
+	 * @param food that needs to be removed
+	 */
 	public void deleteFood(Food food){
 		try{
 			Connection conn=ConnectionFactory.getConnection();
@@ -443,7 +539,10 @@ public class DAO {
 		}
 		logger.debug("food deleted");
 	}
-	
+	/**
+	 * Unused method for updating food.
+	 * @param food that needs to be updated.
+	 */
 	public void updateFood(Food food){
 		logger.warn("deprecated");
 		try{

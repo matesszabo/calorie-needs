@@ -1,6 +1,7 @@
 package hu.unideb.inf.prt.calorie;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -11,8 +12,17 @@ import hu.unideb.inf.prt.calorie.Model.Diet_diary;
 import hu.unideb.inf.prt.calorie.Model.Food;
 import hu.unideb.inf.prt.calorie.Model.Person;
 
+/**
+ * A simple main class to test dao. Unused
+ * @author matesszabo
+ *
+ */
 public class Main {
 
+	/**
+	 * The old main method. Unused
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		DAO dao = new DAO();
@@ -27,12 +37,12 @@ public class Main {
 		person.setWeight(90);
 		person.setYear(30);
 		person.setExcercise(3);
-		person.setGender("nö");
+		person.setGender("Female");
 		person.setGoal(0-1);
 		dao.updateUser(person);
 		
 		Food somefood=dao.getFoodlist().get(2);
-		somefood.setName(somefood.getName()+"átírtam");
+		somefood.setName(somefood.getName()+"");
 		dao.updateFood(somefood);*/
 		
 		List<Food> foodlist= dao.getFoodlist();

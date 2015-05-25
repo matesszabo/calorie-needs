@@ -55,12 +55,39 @@ public class Food {
 			return false;
 		return true;
 	}
+	/**
+	 * Id of the food.
+	 */
 	private int id;
+	/**
+	 * User who added food.
+	 */
 	private int userId;
+	/**
+	 * Name of the food.
+	 */
 	private String name;
+	/**
+	 * Calories in the food.
+	 */
 	private Calorie calorie;
+	/**
+	 * Quantity of the food.
+	 */
 	private double quantity;
+	/**
+	 * Unit of the quantity.
+	 */
 	private String unit;
+	/**
+	 * Constructor for Food class.
+	 * @param id of the food
+	 * @param userId who added food
+	 * @param name of the food
+	 * @param calorie in the food
+	 * @param quantity of the food
+	 * @param unit of the quantity
+	 */
 	public Food(int id,int userId, String name, Calorie calorie, double quantity,
 			String unit) {
 		super();
@@ -71,42 +98,99 @@ public class Food {
 		this.quantity = quantity;
 		this.unit = unit;
 	}
+	/**
+	 * Empty constructor
+	 */
 	public Food() {
 		super();
 	}
+	/**
+	 * A method for getting user id.
+	 * Returns the user id.
+	 * @return user id
+	 */
 	public int getUserId() {
 		return userId;
 	}
+	/**
+	 * A method for setting user id.
+	 * @param userId that needs to be set
+	 */
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	/**
+	 * A method for getting food id.
+	 * Returns food id.
+	 * @return food id
+	 */
 	public int getId() {
 		return id;
 	}
+	/**
+	 * A method for setting food id.
+	 * @param id that needs to be set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
+	/**
+	 * A method for getting the food's name.
+	 * Returns the food's name.
+	 * @return the food's name
+	 */
 	public String getName() {
 		return name;
 	}
+	/**
+	 * A method for setting the food's name.
+	 * @param name that needs to be set.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+	/**
+	 * A method for getting calories in food.
+	 * Returns calories in food.
+	 * @return calories in food
+	 */
 	public Calorie getCalorie() {
 		return calorie;
 	}
+	/**
+	 * A method for setting calories in food.
+	 * @param calorie in food that needs to be set
+	 */
 	public void setCalorie(Calorie calorie) {
 		this.calorie = calorie;
 	}
+	/**
+	 * A method for getting quantity of food.
+	 * Returns the quantity of food.
+	 * @return quantity of food
+	 */
 	public double getQuantity() {
 		return quantity;
 	}
+	/**
+	 * A method for setting quantity of food.
+	 * @param quantity that needs to be set
+	 */
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
+	/**
+	 * A method for getting the unit of quantity.
+	 * Returns the unit of quantity.
+	 * @return unit of quantity
+	 */
 	public String getUnit() {
 		return unit;
 	}
+	/**
+	 * A method for setting the unit of quantity.
+	 * @param unit that needs to be set
+	 */
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}

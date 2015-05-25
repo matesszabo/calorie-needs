@@ -24,7 +24,7 @@ public class Service {
 	 */
 	public double calcBMR(Person person){
 		logger.debug("calculating bmr");
-		if(person.getGender().equals("férfi") || person.getGender().equals("Male")){
+		if(person.getGender().equals("fÃ©rfi") || person.getGender().equals("Male")){
 			
 			return (66.473 +(13.7516*person.getDaily().getWeight())+(5.0033 *person.getHeight())-(6.7550 *(DateTime.now().minusYears(person.getBorn().getYear()).minusMonths(person.getBorn().getMonthOfYear()).minusDays(person.getBorn().getDayOfMonth()).getYear())));
 		}else{
