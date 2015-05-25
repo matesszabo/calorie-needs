@@ -236,8 +236,8 @@ public class Service {
 	/**
 	 * A method for calculating fulfilled calories.
 	 * Returns a Calorie object represents the fulfilled kcal,carbohydrate,fat,protein.
-	 * @param calorie as a list of Calorie objects
-	 * @return a Calorie object represents the fulfilled kcal,carbohydrate,fat,protein
+	 * @param lista as a list of Calorie objects
+	 * @return a Calorie object represents the fulfilled kcal,carbohydrate,fat,protein.
 	 */
 	public Calorie calcFulfilledCalories(List<Calorie>lista){
 		logger.debug("calculating fulfilled calories");
