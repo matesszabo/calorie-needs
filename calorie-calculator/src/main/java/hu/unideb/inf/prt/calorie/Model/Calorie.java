@@ -1,6 +1,49 @@
 package hu.unideb.inf.prt.calorie.Model;
 
 public class Calorie {
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(carbohydrate);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(fat);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(kcal);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(protein);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Calorie other = (Calorie) obj;
+		if (Double.doubleToLongBits(carbohydrate) != Double
+				.doubleToLongBits(other.carbohydrate))
+			return false;
+		if (Double.doubleToLongBits(fat) != Double.doubleToLongBits(other.fat))
+			return false;
+		if (Double.doubleToLongBits(kcal) != Double
+				.doubleToLongBits(other.kcal))
+			return false;
+		if (Double.doubleToLongBits(protein) != Double
+				.doubleToLongBits(other.protein))
+			return false;
+		return true;
+	}
 	private double kcal;
 	private double carbohydrate;
 	private double protein;

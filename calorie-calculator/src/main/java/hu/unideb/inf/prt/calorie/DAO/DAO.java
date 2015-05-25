@@ -20,8 +20,13 @@ import java.util.Map;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DAO {
+	private static Logger logger = LoggerFactory.getLogger(DAO.class);
+
+	
 	public List<Food> getFoodlist(){
 		List<Food> foodlist= new ArrayList<Food>();
 		try{
@@ -34,8 +39,10 @@ public class DAO {
 			foodlist.add(food);
 		}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get food list");
 			e.printStackTrace();
 		}
+		logger.debug("got foodlist");
 		return foodlist;
 	}
 	public Map<DateTime, Double>getWeightByID(int id){
@@ -48,13 +55,15 @@ public class DAO {
 				weightMap.put(new DateTime(rs.getDate(1)), rs.getDouble(2));
 			}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get weightmap");
 			e.printStackTrace();
 		}
-		
+		logger.debug("got weightmap");
 		return weightMap;
 	}
 	
 	public double[] getAverageByUser(int id){
+		logger.warn("deprecated");
 		double[] info= new double[4];
 		try{
 			Connection conn=ConnectionFactory.getConnection();
@@ -85,8 +94,10 @@ public class DAO {
 			}
 			
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get calorie list");
 			e.printStackTrace();
 		}
+		logger.debug("got calorie list by user");
 		return calorielist;
 
 	}
@@ -109,13 +120,14 @@ public class DAO {
 			}
 			
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get calorie list for today");
 			e.printStackTrace();
 		}
+		logger.debug("got calorie list for today");
 		return calorielist;
 
 	}
 
-	//public Person getUser(String uname,)
 	
 	public List<Double>getWeightsByUser(int id){
 		List<Double>weights=new ArrayList<Double>();
@@ -127,8 +139,10 @@ public class DAO {
 				weights.add(rs.getDouble(1));
 			}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get weight list");
 			e.printStackTrace();
 		}
+		logger.debug("got weight list");
 		return weights;
 	}
 	
@@ -144,12 +158,15 @@ public class DAO {
 			foodlist.add(food);
 		}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get food list");
 			e.printStackTrace();
 		}
+		logger.debug("got food list");
 		return foodlist;
 	}
 	
 	public List<Person> getPersonlist(){
+		logger.warn("deprecated, personlist");
 		List<Person> personlist= new ArrayList<Person>();
 		try{
 		Connection conn= ConnectionFactory.getConnection();
@@ -186,8 +203,10 @@ public class DAO {
 			dietlist.add(diary);
 		}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get diet list");
 			e.printStackTrace();
 		}
+		logger.debug("got diet list");
 		return dietlist;
 	}
 	
@@ -202,8 +221,10 @@ public class DAO {
 			date=new DateTime(rs.getDate(2));
 		}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get date");
 			e.printStackTrace();
 		}
+		logger.debug("got date");
 		return date;
 	}
 	
@@ -219,12 +240,15 @@ public class DAO {
 		{
 			person=new Person(rs.getInt(1), rs.getInt(4), new DateTime(rs.getDate(5)), new Person_date(new DateTime(rs.getDate(8)), rs.getDouble(9), rs.getInt(10), rs.getDouble(11)), rs.getString(6), rs.getString(2), rs.getString(3));	break;	}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get person");
 			e.printStackTrace();
 		}
+		logger.debug("got person");
 		return person;
 	}
 	
 	public int getUserIdByUname(String uname){
+		logger.warn("deprecated");
 		int UID=-1;
 		uname="'"+uname+"'";
 		try{
@@ -250,8 +274,10 @@ public class DAO {
 				id=rs.getInt(1);
 			}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get food id");
 			e.printStackTrace();
 		}
+		logger.debug("got food id");
 		return id;
 	}
 	
@@ -265,8 +291,10 @@ public class DAO {
 				id=rs.getInt(1);
 			}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get max person id");
 			e.printStackTrace();
 		}
+		logger.debug("got max person id");
 		return id;
 	}
 	
@@ -281,8 +309,10 @@ public class DAO {
 			 person= new Person_date(new DateTime(rs.getDate(2)),rs.getDouble(3),rs.getInt(4),rs.getDouble(5));
 					}
 		conn.close();}catch(SQLException e){
+			logger.warn("failed to get latest person info");
 			e.printStackTrace();
 		}
+		logger.debug("got latest person info");
 		return person;
 	}
 	
@@ -303,11 +333,14 @@ public class DAO {
 			conn.close();
 			
 			}catch(SQLException e){
+				logger.warn("failed to insert food");
 				e.printStackTrace();
 			}
+		logger.debug("food inserted");
 	}
 		
 	public void insertUser(Person person){
+		logger.warn("deprecated");
 		try{
 			Connection conn= ConnectionFactory.getConnection();
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO FELHASZNALO (ID,FELHNEV,JELSZO,MAGASSAG,SULY,EV,MOZGAS,NEM,CEL) VALUES(?,?,?,?,?,?,?,?,?)");
@@ -323,8 +356,10 @@ public class DAO {
 			ps.executeUpdate();
 			
 			}catch(SQLException e){
+				logger.warn("failed to insert user");
 				e.printStackTrace();
 			}
+		logger.debug("user inserted");
 	}
 	
 	public void insertUser_P(Person person){
@@ -341,8 +376,10 @@ public class DAO {
 			conn.close();
 			
 			}catch(SQLException e){
+				logger.warn("failed to insert user");
 				e.printStackTrace();
 			}
+		logger.debug("user inserted");
 	}
 	
 	public void insertUser_Diary(Person person){
@@ -358,8 +395,10 @@ public class DAO {
 			conn.close();
 			
 			}catch(SQLException e){
+				logger.warn("failed to insert into user diary");
 				e.printStackTrace();
 			}
+		logger.debug("inserted into diary");
 	}
 	
 	public void insertDiary(Diet_diary diary){
@@ -384,8 +423,10 @@ public class DAO {
 			conn.close();
 			
 			}catch(SQLException e){
+				logger.warn("failed to insert into diet diary");
 				e.printStackTrace();
 			}
+		logger.debug("inserted into diet_diary");
 	}
 	
 	public void deleteFood(Food food){
@@ -397,11 +438,14 @@ public class DAO {
 			
 			
 		}catch(SQLException e){
+			logger.warn("failed to delete food");
 			e.printStackTrace();
 		}
+		logger.debug("food deleted");
 	}
 	
 	public void updateFood(Food food){
+		logger.warn("deprecated");
 		try{
 			Connection conn=ConnectionFactory.getConnection();
 			PreparedStatement ps=conn.prepareStatement("UPDATE KAJAK SET NEV=? , KALORIA=? , SZENHIDRAT=? , ZSIR=? , FEHERJE=? , MENNYISEG=? , MERT_E=? WHERE ID=? AND USER_ID!=0");

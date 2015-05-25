@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import hu.unideb.inf.prt.calorie.DAO.ConnectionFactory;
 import hu.unideb.inf.prt.calorie.DAO.DAO;
 import hu.unideb.inf.prt.calorie.Model.Calorie;
 import hu.unideb.inf.prt.calorie.Model.Diet_diary;
@@ -13,12 +16,15 @@ import hu.unideb.inf.prt.calorie.Model.Person;
 import hu.unideb.inf.prt.calorie.Model.Person_date;
 
 public class Service {
+	private static Logger logger = LoggerFactory.getLogger(Service.class);
+
 	
 	/*
 	 * A how old method would be great
 	 */
 	public double calcBMR(Person person){
-		if(person.getGender().equals("férfi")){
+		logger.debug("calculating bmr");
+		if(person.getGender().equals("férfi") || person.getGender().equals("Male")){
 			
 			return (66.473 +(13.7516*person.getDaily().getWeight())+(5.0033 *person.getHeight())-(6.7550 *(DateTime.now().minusYears(person.getBorn().getYear()).minusMonths(person.getBorn().getMonthOfYear()).minusDays(person.getBorn().getDayOfMonth()).getYear())));
 		}else{
@@ -27,10 +33,12 @@ public class Service {
 	}
 	
 	public double calcBMI(Person person){
+		logger.debug("calculating bmi");
 		return person.getDaily().getWeight()/Math.pow(((double)person.getHeight())/100, 2);
 	}
 	
 	public Calorie calcNeeds(Person person){
+		logger.debug("calculating needs");
 		Calorie calorie=null;
 		double modifier=person.getDaily().getGoal()/0.5*500;
 		if(person.getDaily().getExcercise()==1){
@@ -67,37 +75,39 @@ public class Service {
 	}
 	
 	public static Person existsUser(String uname, String passw){
+		logger.debug("getting user");
 		DAO dao= new DAO();
 		Person person=dao.getUserId(uname, passw);
 		return person;
 	}
 	
 	public boolean existsUserByUname(String uname){
+		logger.debug("checking username");
 		DAO dao= new DAO();
 		return dao.getUserIdByUname(uname)==-1?false:true;
 	}
 	
 	public List<Food>getFoodListByUserId(int id){
+		logger.debug("getting food list");
 		DAO dao= new DAO();
 		return dao.getFoodlistByUser(id);
 	}
 	
 	public List<Diet_diary>getDietDiaryByUserId(int id){
+		logger.debug("getting diet list");
 		DAO dao = new DAO();
 		return dao.getDiet_diarylist(id);
 	}
 	
 	public Map<DateTime,Double>getWeightMapById(int id){
+		logger.debug("getting the weight map");
 		DAO dao= new DAO();
 		return dao.getWeightByID(id);
 	}
 	
-	public double[] getAverageByUserId(int id){
-		DAO dao= new DAO();
-		return dao.getAverageByUser(id);
-	}
 	
 	public Calorie averageCalorie(List<Calorie>list){
+		logger.debug("calculating average calorie");
 		int i=0;
 		Calorie calorie=new Calorie(0,0,0,0);
 		for (Calorie calorie2 : list) {
@@ -128,6 +138,7 @@ public class Service {
 		
 	}
 	public double averageWeight(List<Double>list){
+		logger.debug("calculating average weight");
 		double avg=0;
 		int i=0;
 		for (Double double1 : list) {
@@ -143,13 +154,16 @@ public class Service {
 		return averageWeight(list);
 	}
 	
+	
 	public Person_date getCurrentInfoByUser(int id){
+		logger.debug("getting current user info");
 		DAO dao= new DAO();
 		Person_date pd=dao.getLatestPersonInfoById(id);
 		return pd;
 	}
 	
 	public Calorie calcFulfilledCalories(List<Calorie>lista){
+		logger.debug("calculating fulfilled calories");
 		Calorie calorie=new Calorie();
 		for (Calorie calorie2 : lista) {
 			calorie.setKcal(calorie.getKcal()+calorie2.getKcal());
@@ -161,6 +175,7 @@ public class Service {
 	}
 	
 	public String calcHealthStatus(Person person){
+		logger.debug("checking the BMI");
 		if(person.getBMI()<15)
 			return "Very severely underweight";
 		if(person.getBMI()>=15 && person.getBMI()<16)
@@ -208,12 +223,17 @@ public class Service {
 	}
 	
 	public void deleteFood(Food food,Person person){
+		logger.debug("attempting to delete food");
 		if(food.getUserId()==person.getId()){
 		DAO dao= new DAO();
-		dao.deleteFood(food);}
+		dao.deleteFood(food);
+		logger.debug("food deleted");}
+		else
+			logger.warn("unable to delete food");
 	}
 	
 	public void registerUser(Person person){
+		logger.debug("registering a new user");
 		DAO dao= new DAO();
 		dao.insertUser_P(person);
 		dao.insertUser_Diary(person);
