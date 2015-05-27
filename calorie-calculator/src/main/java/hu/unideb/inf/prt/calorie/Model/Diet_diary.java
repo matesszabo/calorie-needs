@@ -1,7 +1,11 @@
 package hu.unideb.inf.prt.calorie.Model;
 
 import org.joda.time.DateTime;
-
+/**
+ * A class representing an item of meal history.
+ * @author mates
+ *
+ */
 public class Diet_diary {
 
 	/**
@@ -60,7 +64,7 @@ public class Diet_diary {
 		this.remaining = remaining;
 	}
 	/**
-	 * Empty constructor
+	 * Empty constructor.
 	 */
 	public Diet_diary() {
 		super();

@@ -20,6 +20,9 @@ import hu.unideb.inf.prt.calorie.Model.Person_date;
  *
  */
 public class Service {
+	/**
+	 * Logger for service class.
+	 */
 	private static Logger logger = LoggerFactory.getLogger(Service.class);
 
 	
@@ -27,7 +30,7 @@ public class Service {
 	 * A how old method would be great
 	 */
 	/**
-	 * A method for calculating BMR
+	 * A method for calculating BMR.
 	 * Returns the BMR value.
 	 * @param person who provides the information
 	 * @return BMR value

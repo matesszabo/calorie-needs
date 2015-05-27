@@ -161,7 +161,7 @@ public class Person {
 	}
 
 	/**
-	 * Constructor for registering user
+	 * Constructor for registering user.
 	 * @param id of the user
 	 * @param height of the user
 	 * @param born date of user
@@ -183,7 +183,7 @@ public class Person {
 	}
 
 	/**
-	 * Full constructor
+	 * Full constructor.
 	 * @param id of user
 	 * @param height of user
 	 * @param born date of user

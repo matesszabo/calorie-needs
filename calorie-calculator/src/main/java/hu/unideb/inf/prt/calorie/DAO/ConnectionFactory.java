@@ -13,12 +13,22 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ConnectionFactory {
+	/**
+	 * A new instance of the ConnectionFactory.
+	 */
 	private static ConnectionFactory factory = new ConnectionFactory();
-	//private static Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);
 
-	
+	/**
+	 * URL of the database.
+	 */
 	static final String URL="";
+	/**
+	 * Connect to database with this username.
+	 */
 	static final String USERNAME="";
+	/**
+	 * Connect to database with this password.
+	 */
 	static final String PASSWORD="";
 	/**
 	 * Constructor of ConnectionFactory.

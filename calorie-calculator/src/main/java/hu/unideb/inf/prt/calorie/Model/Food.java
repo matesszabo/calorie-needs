@@ -1,5 +1,9 @@
 package hu.unideb.inf.prt.calorie.Model;
-
+/**
+ * A class representing a food.
+ * @author mates
+ *
+ */
 public class Food {
 
 	/* (non-Javadoc)
@@ -99,7 +103,7 @@ public class Food {
 		this.unit = unit;
 	}
 	/**
-	 * Empty constructor
+	 * Empty constructor.
 	 */
 	public Food() {
 		super();

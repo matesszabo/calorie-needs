@@ -74,7 +74,7 @@ public class Calorie {
 		this.kcal = kcal;
 	}
 	/**
-	 * Constructor for food
+	 * Constructor for food.
 	 * @param kcal in food
 	 * @param carbohydrate in food
 	 * @param fat in food
@@ -90,7 +90,7 @@ public class Calorie {
 	
 	
 	/**
-	 * Empty constructor
+	 * Empty constructor.
 	 */
 	public Calorie() {
 		super();
@@ -119,7 +119,7 @@ public class Calorie {
 		return carbohydrate;
 	}
 	/**
-	 * A method for setting carbohydrate value
+	 * A method for setting carbohydrate value.
 	 * @param carbohydrate value that needs to be set.
 	 */
 	public void setCarbohydrate(double carbohydrate) {

@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class DAO {
+	/**
+	 * Logger for DAO class.
+	 */
 	private static Logger logger = LoggerFactory.getLogger(DAO.class);
 
 	/**
@@ -238,7 +241,12 @@ public class DAO {
 		return null;
 		
 	}
-	
+	/**
+	 * Method for getting the meal history of a user.
+	 * Returns a list of Diet_diary objects.
+	 * @param id of the user
+	 * @return list of Diet_diary objects
+	 */
 	public List<Diet_diary> getDiet_diarylist(int id){
 		List<Diet_diary> dietlist= new ArrayList<Diet_diary>();
 		try{
