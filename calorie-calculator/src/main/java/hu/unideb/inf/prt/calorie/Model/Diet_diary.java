@@ -191,10 +191,10 @@ public class Diet_diary {
 	}
 	@Override
 	public String toString() {
-		return "Diet_diary [userId=" + userId + ", foodId=" + foodId
-				+ ", date=" + date + ", quantity=" + quantity + ", unit="
-				+ unit + ", meal=" + meal + ", needs=" + needs + ", remaining="
-				+ remaining + "]";
+		return "foodId=" + foodId
+				+ ", date=" + date + ", quantity=" + quantity + " "
+				+ unit + ", meal=" + meal + ", needs=" + needs + ", fulfilled="
+				+ remaining;
 	}
 	
 	

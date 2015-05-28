@@ -200,8 +200,8 @@ public class Food {
 	}
 	@Override
 	public String toString() {
-		return "Food [id=" + id + ", name=" + name + ", calorie=" + calorie
-				+ ", quantity=" + quantity + ", unit=" + unit + "]";
+		return "id=" + id + " " + name + ", calorie=" + calorie
+				+ ", quantity=" + quantity + " " + unit;
 	}
 	
 	

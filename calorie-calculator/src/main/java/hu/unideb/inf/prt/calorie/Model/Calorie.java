@@ -157,8 +157,8 @@ public class Calorie {
 	}
 	@Override
 	public String toString() {
-		return "Calorie [kcal=" + kcal + ", carbohydrate=" + carbohydrate
-				+ ", protein=" + protein + ", fat=" + fat + "]";
+		return "kcal=" + kcal + ", carbohydrate=" + carbohydrate
+				+ ", protein=" + protein + ", fat=" + fat ;
 	}
 	
 	
